@@ -60,4 +60,4 @@ hex_from_byte:
 
         mov esp, ebp
         pop ebp
-        ret
+        ret 12

@@ -1,9 +1,12 @@
 #ifndef KERNEL_HANDLER_HEADER
 #define KERNEL_HANDLER_HEADER
 
+// custom types
+typedef enum { false, true } bool;
+
 // extern declarations
 extern void _checkPCI();
-extern void hex_from_byte(char byte, char* buffer);
+extern void hex_from_byte(unsigned char byte, volatile char* buffer);
 
 // declarations
 
@@ -13,16 +16,18 @@ extern void hex_from_byte(char byte, char* buffer);
 	10/a - Light Green, 11/b - Light Cyan, 12/c - Light Red, 
 	13/d - Light Magenta, 14/e - Light Brown, 15/f – White.
 
-	Uses 2 bytes, first for value, second for color*/
-void print_text_videomemory(const char * buffer);
-void print_char_videomemory(char byte);
+	Uses 2 bytes, first for value, second for color
+*/
+void print_text_videomemory(volatile const unsigned char * buffer, bool new_string);
+void print_char_videomemory(unsigned char byte);
 void clear_screen();
-//void hex_from_byte(char byte, char * buffer);
+void strcpy(volatile unsigned char* src, volatile const unsigned char* dst);
+void c_variant_hex_from_byte(unsigned char byte, volatile unsigned char* buffer);
 
 // hardware addresses
-char *video_memory = (char*)0xb8000;
+volatile char *video_memory = (volatile char*)0xb8000;
 
 // buffers
-char main_buffer[1024];
+volatile unsigned char main_buffer[1024];
 
 #endif
