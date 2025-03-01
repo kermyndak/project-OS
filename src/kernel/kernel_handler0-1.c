@@ -4,8 +4,8 @@ void kmain(void){
 	// clear screen
     clear_screen();
 
-	print_text_videomemory("some text");
-    hex_from_byte(0, main_buffer);
+	//print_text_videomemory("some text");
+    hex_from_byte(228, main_buffer);
     print_text_videomemory(main_buffer);
     //_checkPCI();
 	return;
