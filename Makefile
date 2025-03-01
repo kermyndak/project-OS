@@ -7,7 +7,9 @@ CFLAGS=-m32 -Werror -nostdlib -nostdinc -fno-builtin -fno-stack-protector
 ASMFLAGS=-f
 ASMFORMAT=elf
 KERNELSRC=src/kernel/
-KERNELOBJ=obj/kernel
+KERNELOBJ=obj/kernel/
+TEMPFUNCTIONSSRC=src/temp_functions/
+TEMPFUNCTIONSOBJ=obj/temp_functions/
 
 build:
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(KERNELSRC)kernel_preparation.asm -o $(KERNELOBJ)kasm.o
@@ -15,5 +17,12 @@ build:
 	$(LD) -m elf_i386 -T link.ld -o kernel $(KERNELOBJ)kasm.o $(KERNELOBJ)kc.o
 
 with_temp:
-	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) src/temp_functions/temp.asm -o obj/temp_functions/temp.o
-	$(LD) 
+	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(TEMPFUNCTIONSSRC)temp.asm -o $(TEMPFUNCTIONSOBJ)temp.o
+	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(KERNELSRC)kernel_preparation.asm -o $(KERNELOBJ)kasm.o
+	$(CC) $(CFLAGS) -c $(KERNELSRC)kernel_handler0-1.c -o $(KERNELOBJ)kc0-1.o
+	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(KERNELOBJ)kasm.o $(KERNELOBJ)kc0-1.o
+
+clean:
+	rm -rf $(KERNELOBJ)*
+	rm -rf $(TEMPFUNCTIONSOBJ)*
+	rm -f obj/*.o
