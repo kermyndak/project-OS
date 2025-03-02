@@ -56,6 +56,6 @@ void c_variant_hex_from_byte(unsigned char byte, volatile unsigned char* buffer)
 	temp = byte % 16;
 	if (temp > 9) *buffer++ = temp + 55;
 	else *buffer++ = temp + 48;
-	*buffer++ = '\0';
+	*buffer = '\0';
 	return;
 }
