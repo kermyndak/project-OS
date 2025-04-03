@@ -2,6 +2,7 @@ bits 32
 section .text
 global _checkPCI
 global hex_from_byte
+extern print_text_videomemory
 
 _checkPCI:
     push ebp
@@ -23,8 +24,18 @@ hex_from_byte:
     push ebp
     mov ebp, esp
 
-    mov eax, [ecx]
-    mov bl, 16
+    movzx eax, byte[esp + 4]
+    mov edx, [esp + 8]
+    ;
+    pusha
+    sub esp, 8
+    mov ebx, buffer_temp
+    mov [esp], ebx
+    mov ebx, [buffer_temp]
+    mov [esp + 4], ebx
+    call print_text_videomemory
+    popa
+    ;
     div bl
     cmp al, 9
     jg .add_character_al
@@ -60,4 +71,23 @@ hex_from_byte:
 
         mov esp, ebp
         pop ebp
-        ret 12
+        ;
+        pusha
+        mov [buffer_temp], eax
+        mov [buffer_temp + 4], ebx
+        mov [buffer_temp + 8], ecx
+        mov [buffer_temp + 12], edx
+        sub esp, 16
+        mov ebx, buffer_temp
+        mov [esp], ebx
+        mov ebx, [buffer_temp]
+        mov [esp + 4], ebx
+        call print_text_videomemory
+        popa
+        ;
+        ret
+
+section .bss
+    resb 150
+section .data
+    buffer_temp dd 65, 0, 0, 0, 0, 0, 0

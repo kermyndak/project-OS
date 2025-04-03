@@ -3,7 +3,7 @@
 CC=$(PREFIX)gcc
 ASMCC=nasm
 LD=$(PREFIX)ld
-CFLAGS=-m32 -Werror -nostdlib -nostdinc -fno-builtin -fno-stack-protector
+CFLAGS=-m32 -Werror -nostdlib -nostdinc -fno-builtin -fno-stack-protector -Wno-implicit-function-declaration
 ASMFLAGS=-f
 ASMFORMAT=elf
 KERNELSRC=src/kernel/
