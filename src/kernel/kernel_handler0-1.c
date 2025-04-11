@@ -30,6 +30,14 @@ void kmain(void){
         : "edx");
 	c_variant_hex_from_byte(msr, main_buffer);
 	print_text_videomemory(main_buffer, true);
+	char arr[128];
+	for (int i = 0; i != 5; i++){
+		arr[i] = 228 + i;
+	}
+	arr[5] = '\0';
+	strcpy(main_buffer, arr);
+	hex_from_bytes_array(arr, main_buffer);
+	print_text_videomemory(main_buffer, true);
 	//strcpy(main_buffer, "qwerty");
     //print_text_videomemory(main_buffer, true);
 	//c_variant_hex_from_byte(228, main_buffer);
