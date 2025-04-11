@@ -28,15 +28,14 @@ static int end_of_text = 0;
 void print_text_videomemory(volatile const unsigned char * buffer, bool new_string){
 	for (int i = end_of_text, j = 0; buffer[j] != '\0'; j++, end_of_text = i += 2){
         if (buffer[j] == '\n'){
-            i = 160 * counter_lines++ - 2;
+            i = 160 * counter_lines++ - 2; // -2 for next iteration
             continue;
         }
 		video_memory[i] = buffer[j];
 		video_memory[i+1] = 0x02;
 	}
 	if (new_string){
-		end_of_text += 160;
-		counter_lines++;
+		end_of_text = 160 * counter_lines++;
 	}
 	return;
 }

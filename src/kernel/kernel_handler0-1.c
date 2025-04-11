@@ -9,9 +9,27 @@ void kmain(void){
 	//_checkPCI();
 	// __asm__("pusha\n\tpopa");
 	cli();
+	print_text_videomemory("some text\nsome text\nsome text", false);
 	print_text_videomemory("some text\nsome text\nsome text", true);
-	print_text_videomemory("some text\nsome text\nsome text", true);
-    hex_from_byte(228, main_buffer);
+    c_variant_hex_from_byte(228, main_buffer);
+	print_text_videomemory(main_buffer, true);
+	int msr;
+	asm volatile ( "rdtsc\n\t"    // Returns the time in EDX:EAX.
+        "shl $32, %%edx\n\t"  // Shift the upper bits left.
+        "or %%edx, %0"        // 'Or' in the lower bits.
+        : "=a" (msr)
+        :
+        : "edx");
+	c_variant_hex_from_byte(msr, main_buffer);
+	print_text_videomemory(main_buffer, true);
+	asm volatile ( "rdtsc\n\t"    // Returns the time in EDX:EAX.
+        "shl $32, %%edx\n\t"  // Shift the upper bits left.
+        "or %%edx, %0"        // 'Or' in the lower bits.
+        : "=a" (msr)
+        :
+        : "edx");
+	c_variant_hex_from_byte(msr, main_buffer);
+	print_text_videomemory(main_buffer, true);
 	//strcpy(main_buffer, "qwerty");
     //print_text_videomemory(main_buffer, true);
 	//c_variant_hex_from_byte(228, main_buffer);
