@@ -7,5 +7,6 @@ extern void hex_from_byte(unsigned char byte, volatile char* buffer);
 
 // buffers
 volatile unsigned char main_buffer[1024];
+unsigned long longs_buffer[32];
 
 #endif
