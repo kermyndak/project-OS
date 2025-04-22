@@ -15,6 +15,7 @@
 */
 void print_text_videomemory(volatile const unsigned char * buffer, bool new_string);
 void print_char_videomemory(unsigned char byte);
+void print_new_line();
 void clear_screen();
 
 // Video memory address
@@ -42,13 +43,17 @@ void print_text_videomemory(volatile const unsigned char * buffer, bool new_stri
 
 void print_char_videomemory(unsigned char byte){
 	if (byte == '\n'){
-		end_of_text += 160;
-		counter_lines++;
+		end_of_text = 160 * counter_lines++;
 		return;
 	}
     video_memory[0] = byte;
     video_memory[1] = 0x02;
     return;
+}
+
+void print_new_line(){
+	end_of_text = 160 * counter_lines++;
+	return;
 }
 
 void clear_screen(){
