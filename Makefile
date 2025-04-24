@@ -1,6 +1,14 @@
 # For Mac OS add
 # PREFIX = x86_64-elf-
+ifeq ($(shell uname), Linux)
+CC=gcc
+else
+ifeq ($(shell x86_64-elf-gcc --help 2>/dev/null| grep "Options:"),)
+$(error x86_64-elf-gcc not installed...)
+else
 CC=$(PREFIX)gcc
+endif
+endif
 ASMCC=nasm
 LD=$(PREFIX)ld
 CFLAGS=-m32 -Werror -nostdlib -nostdinc -fno-builtin -fno-stack-protector -Wno-implicit-function-declaration
@@ -12,7 +20,7 @@ KERNELSRC=src/kernel/
 KERNELOBJ=obj/kernel/
 TEMPFUNCTIONSSRC=src/temp_functions/
 TEMPFUNCTIONSOBJ=obj/temp_functions/
-DEFAULT_COLOR=4 # Color for text in OS
+DEFAULT_COLOR= # Color for text in OS
 
 ifneq ($(DEFAULT_COLOR),)
 CFLAGS+= -DDEFAULT_COLOR=$(DEFAULT_COLOR)
