@@ -85,11 +85,15 @@ void print_char_videomemory(unsigned char byte){
 		video_memory[end_of_text + 1] = DEFAULT_COLOR;
 		video_memory[end_of_text + 2] = ' ';
 		video_memory[end_of_text + 3] = DEFAULT_COLOR;
+#if DEFAULT_TAB_SIZE == FOUR_SPACES
 		video_memory[end_of_text + 4] = ' ';
 		video_memory[end_of_text + 5] = DEFAULT_COLOR;
 		video_memory[end_of_text + 6] = ' ';
 		video_memory[end_of_text + 7] = DEFAULT_COLOR;
 		end_of_text += 8;
+		return;
+#endif
+		end_of_text += 4;
 		return;
 	}
     video_memory[end_of_text] = byte;
@@ -113,11 +117,15 @@ void print_text_videomemory_with_color(
 			video_memory[i + 1] = DEFAULT_COLOR;
 			video_memory[i + 2] = ' ';
 			video_memory[i + 3] = DEFAULT_COLOR;
+#if DEFAULT_TAB_SIZE == FOUR_SPACES
 			video_memory[i + 4] = ' ';
 			video_memory[i + 5] = DEFAULT_COLOR;
 			video_memory[i + 6] = ' ';
 			video_memory[i + 7] = DEFAULT_COLOR;
 			i += 6; // -2 for next iteration
+			continue;
+#endif
+			i += 2;
 			continue;
 		}
 		video_memory[i] = buffer[j];
@@ -139,11 +147,15 @@ void print_char_videomemory_with_color(unsigned char byte, colors color){
 		video_memory[end_of_text + 1] = DEFAULT_COLOR;
 		video_memory[end_of_text + 2] = ' ';
 		video_memory[end_of_text + 3] = DEFAULT_COLOR;
+#if DEFAULT_TAB_SIZE == FOUR_SPACES
 		video_memory[end_of_text + 4] = ' ';
 		video_memory[end_of_text + 5] = DEFAULT_COLOR;
 		video_memory[end_of_text + 6] = ' ';
 		video_memory[end_of_text + 7] = DEFAULT_COLOR;
 		end_of_text += 8;
+		return;
+#endif
+		end_of_text += 4;
 		return;
 	}
     video_memory[end_of_text] = byte;
@@ -163,11 +175,15 @@ void print_error_text_videomemory(volatile const unsigned char* buffer, bool new
 			video_memory[i + 1] = DEFAULT_COLOR;
 			video_memory[i + 2] = ' ';
 			video_memory[i + 3] = DEFAULT_COLOR;
+#if DEFAULT_TAB_SIZE == FOUR_SPACES
 			video_memory[i + 4] = ' ';
 			video_memory[i + 5] = DEFAULT_COLOR;
 			video_memory[i + 6] = ' ';
 			video_memory[i + 7] = DEFAULT_COLOR;
 			i += 6; // -2 for next iteration
+			continue;
+#endif
+			i += 2;
 			continue;
 		}
 		video_memory[i] = buffer[j];
