@@ -20,9 +20,22 @@ KERNELOBJ=obj/kernel/
 TEMPFUNCTIONSSRC=src/temp_functions/
 TEMPFUNCTIONSOBJ=obj/temp_functions/
 DEFAULT_COLOR= # Color for text in OS
+DEFAULT_TAB_SIZE=2
 
 ifneq ($(DEFAULT_COLOR),)
+ifeq ($(shell if [ $(DEFAULT_COLOR) -ge 0 ] && [ $(DEFAULT_COLOR) -le 15 ]; then echo true; fi), true)
 CFLAGS+= -DDEFAULT_COLOR=$(DEFAULT_COLOR)
+else
+$(error Bad color, value between 0 and 15.)
+endif
+endif
+
+ifneq ($(DEFAULT_TAB_SIZE),)
+ifeq ($(shell if [ $(DEFAULT_TAB_SIZE) -eq 2 ] || [ $(DEFAULT_TAB_SIZE) -eq 4 ]; then echo true; fi), true)
+CFLAGS+= -DDEFAULT_TAB_SIZE=$(DEFAULT_TAB_SIZE)
+else
+$(error Bad tab size, only 2 or 4.)
+endif
 endif
 
 build:

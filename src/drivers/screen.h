@@ -13,8 +13,14 @@ typedef enum {
 	LIGHT_BROWN, WHITE
 } colors;
 
+typedef enum { TWO_SPACES=2, FOUR_SPACES=4 } tab_size;
+
 #ifndef DEFAULT_COLOR
 #define DEFAULT_COLOR GREEN
+#endif
+
+#ifndef DEFAULT_TAB_SIZE
+#define DEFAULT_TAB_SIZE FOUR_SPACES
 #endif
 
 //declarations
@@ -49,11 +55,15 @@ void print_text_videomemory(volatile const unsigned char * buffer, bool new_stri
 			video_memory[i + 1] = DEFAULT_COLOR;
 			video_memory[i + 2] = ' ';
 			video_memory[i + 3] = DEFAULT_COLOR;
+#if DEFAULT_TAB_SIZE == FOUR_SPACES
 			video_memory[i + 4] = ' ';
 			video_memory[i + 5] = DEFAULT_COLOR;
 			video_memory[i + 6] = ' ';
 			video_memory[i + 7] = DEFAULT_COLOR;
 			i += 6; // -2 for next iteration
+			continue;
+#endif
+			i += 2;
 			continue;
 		}
 		video_memory[i] = buffer[j];
