@@ -1,5 +1,4 @@
-# For Mac OS add
-# PREFIX = x86_64-elf-
+# For Mac OS with arm arch compiler x86_64-elf-gcc
 ifeq ($(shell uname), Linux)
 CC=gcc
 else

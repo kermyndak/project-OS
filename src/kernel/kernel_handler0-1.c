@@ -19,7 +19,7 @@ void kmain(void){
 	print_text_videomemory(main_buffer, true);
 	print_new_line();
 #endif
-	print_text_videomemory("Proccessor: ", false);
+	print_text_videomemory("\tProccessor: ", false);
 	convert_array_extended_registers_to_string_about_proccessor(longs_buffer, main_buffer);
 	print_text_videomemory(main_buffer, true);
 
