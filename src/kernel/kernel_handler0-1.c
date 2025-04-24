@@ -26,9 +26,9 @@ void kmain(void){
 #ifdef TEST_MODE
 	print_new_line();
 	if (test()){
-		print_text_videomemory("Tests completed.", false);
+		print_text_videomemory_with_color("Tests completed.", true, GREEN);
 	} else {
-		print_text_videomemory_with_color("Tests failed.", true, 0x04);
+		print_text_videomemory_with_color("Tests failed.", true, RED);
 	}
 	return;
 #endif

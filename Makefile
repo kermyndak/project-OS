@@ -12,6 +12,11 @@ KERNELSRC=src/kernel/
 KERNELOBJ=obj/kernel/
 TEMPFUNCTIONSSRC=src/temp_functions/
 TEMPFUNCTIONSOBJ=obj/temp_functions/
+DEFAULT_COLOR=4 # Color for text in OS
+
+ifneq ($(DEFAULT_COLOR),)
+CFLAGS+= -DDEFAULT_COLOR=$(DEFAULT_COLOR)
+endif
 
 build:
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(KERNELSRC)kernel_preparation.asm -o $(KERNELOBJ)kasm.o
