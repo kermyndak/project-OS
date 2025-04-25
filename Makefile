@@ -15,6 +15,8 @@ DEBUGFLAGS=-g -DDEBUG_MODE
 TESTFLAG=-DTEST_MODE
 ASMFLAGS=-f
 ASMFORMAT=elf
+BOOTSRC=src/boot/
+BOOTOBJ=obj/boot/
 KERNELSRC=src/kernel/
 KERNELOBJ=obj/kernel/
 TEMPFUNCTIONSSRC=src/temp_functions/
@@ -39,27 +41,28 @@ endif
 endif
 
 build:
-	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(KERNELSRC)kernel_preparation.asm -o $(KERNELOBJ)kasm.o
+	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(BOOTSRC)kernel_preparation.asm -o $(BOOTOBJ)kasm.o
 	$(CC) $(CFLAGS) -c $(KERNELSRC)kernel_handler.c -o $(KERNELOBJ)kc.o
-	$(LD) -m elf_i386 -T link.ld -o kernel $(KERNELOBJ)kasm.o $(KERNELOBJ)kc.o
+	$(LD) -m elf_i386 -T link.ld -o kernel $(BOOTOBJ)kasm.o $(KERNELOBJ)kc.o
 
 with_temp:
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(TEMPFUNCTIONSSRC)temp.asm -o $(TEMPFUNCTIONSOBJ)temp.o
-	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(KERNELSRC)kernel_preparation.asm -o $(KERNELOBJ)kasm.o
+	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(BOOTSRC)kernel_preparation.asm -o $(BOOTOBJ)kasm.o
+	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) src/cpu/interrupts.asm -o $(KERNELOBJ)interrupts.o
 	$(CC) $(CFLAGS) -c $(KERNELSRC)kernel_handler0-1.c -o $(KERNELOBJ)kc0-1.o
-	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(KERNELOBJ)kasm.o $(KERNELOBJ)kc0-1.o
+	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(BOOTOBJ)kasm.o $(KERNELOBJ)kc0-1.o $(KERNELOBJ)interrupts.o
 
 debug_mode:
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(TEMPFUNCTIONSSRC)temp.asm -o $(TEMPFUNCTIONSOBJ)temp.o
-	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(KERNELSRC)kernel_preparation.asm -o $(KERNELOBJ)kasm.o
+	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(BOOTSRC)kernel_preparation.asm -o $(BOOTOBJ)kasm.o
 	$(CC) $(CFLAGS) $(DEBUGFLAGS) -c $(KERNELSRC)kernel_handler0-1.c -o $(KERNELOBJ)kc0-1.o
-	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(KERNELOBJ)kasm.o $(KERNELOBJ)kc0-1.o
+	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(BOOTOBJ)kasm.o $(KERNELOBJ)kc0-1.o
 
 test_mode:
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(TEMPFUNCTIONSSRC)temp.asm -o $(TEMPFUNCTIONSOBJ)temp.o
-	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(KERNELSRC)kernel_preparation.asm -o $(KERNELOBJ)kasm.o
+	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(BOOTSRC)kernel_preparation.asm -o $(BOOTOBJ)kasm.o
 	$(CC) $(CFLAGS) $(TESTFLAG) -c $(KERNELSRC)kernel_handler0-1.c -o $(KERNELOBJ)kc0-1.o
-	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(KERNELOBJ)kasm.o $(KERNELOBJ)kc0-1.o
+	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(BOOTOBJ)kasm.o $(KERNELOBJ)kc0-1.o
 
 clean:
 	rm -rf $(KERNELOBJ)*
