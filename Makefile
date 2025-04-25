@@ -20,7 +20,7 @@ KERNELOBJ=obj/kernel/
 TEMPFUNCTIONSSRC=src/temp_functions/
 TEMPFUNCTIONSOBJ=obj/temp_functions/
 DEFAULT_COLOR= # Color for text in OS
-DEFAULT_TAB_SIZE=2
+DEFAULT_TAB_SIZE=
 
 ifneq ($(DEFAULT_COLOR),)
 ifeq ($(shell if [ $(DEFAULT_COLOR) -ge 0 ] && [ $(DEFAULT_COLOR) -le 15 ]; then echo true; fi), true)

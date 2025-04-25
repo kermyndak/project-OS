@@ -37,12 +37,5 @@ void kmain(void){
 	print_text_videomemory(main_buffer, true);
 	bits_with_indexes_from_extended_register(longs_buffer[0], main_buffer, ZERO_FORMAT);
 	print_text_videomemory(main_buffer, true);
-	// print_text_videomemory(main_buffer, true);
-	// unsigned long var = read_cr0();
-	// hex_from_extended_register(var, main_buffer);
-	// print_text_videomemory(main_buffer, true);
-	
-	//c_variant_hex_from_byte(228, main_buffer);
-	//print_text_videomemory(main_buffer, true);
 	return;
 }

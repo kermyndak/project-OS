@@ -2,7 +2,7 @@
 
 void kmain(void){
 	// clear screen
-	print_text()
+	//print_text()
 
 	clear_screen();
 
