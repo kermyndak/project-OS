@@ -88,5 +88,12 @@ global irq16
 %endrep
 
 isr_handler:
+    pusha
+    mov ax, 0x10
+    mov ds, ax
+
 
 irq_handler:
+    pusha
+    mov ax, 0x10
+    mov ds, ax

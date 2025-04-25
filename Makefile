@@ -50,7 +50,9 @@ with_temp:
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(BOOTSRC)kernel_preparation.asm -o $(BOOTOBJ)kasm.o
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) src/cpu/interrupts.asm -o $(KERNELOBJ)interrupts.o
 	$(CC) $(CFLAGS) -c $(KERNELSRC)kernel_handler0-1.c -o $(KERNELOBJ)kc0-1.o
-	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(BOOTOBJ)kasm.o $(KERNELOBJ)kc0-1.o $(KERNELOBJ)interrupts.o
+	$(CC) $(CFLAGS) -c src/cpu/isr.c -o $(KERNELOBJ)isr.o
+	$(CC) $(CFLAGS) -c src/cpu/irq.c -o $(KERNELOBJ)irq.o
+	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(BOOTOBJ)kasm.o $(KERNELOBJ)kc0-1.o $(KERNELOBJ)interrupts.o $(KERNELOBJ)isr.o $(KERNELOBJ)irq.o
 
 debug_mode:
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(TEMPFUNCTIONSSRC)temp.asm -o $(TEMPFUNCTIONSOBJ)temp.o
