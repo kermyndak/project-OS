@@ -15,11 +15,6 @@ global start
 extern kmain	        ;kmain is defined in the c file
 
 start:
-    cli 			;block interrupts
-    ;lgdt GDTbase
-    ;mov eax, cr0 
-    ;or al, 1       ; set PE (Protection Enable) bit in CR0 (Control Register 0)
-    ;mov cr0, eax
     mov esp, stack_space	;set stack pointer
     call kmain
     hlt		 	;halt the CPU

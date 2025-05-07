@@ -2,3 +2,5 @@ set_variables.sh
 obj/
 kernel
 output.json
+bootpart.bin
+disk.img
