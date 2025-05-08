@@ -2,25 +2,39 @@
 KERNEL_POINT equ 0x1000
 
 [bits 16]
-load_kernel:
+
+before_load_kernel:
     mov	[BOOT_DRIVE], dl
 	mov	bp, 0x9000
 	mov	sp, bp
     mov bx, REAL_MODE_MESSAGE
+    sub dl, 0x80
+    add [REAL_MODE_MESSAGE+32], dl ; Set disk number in message
     call print16
     call print_new_line16
 
-    mov bx, TRY_PROTECTED_MODE_MESSAGE
+load_kernel:
+    ;movzx ax, [BOOT_DRIVE]
+    ;mov bx, DRIVE_MESSAGE
+    ;call hex_from_register16
+    ;call print16
+    ;call print_new_line16
+
+    mov bx, REAL_MODE_MESSAGE
     call print16
     call print_new_line16
-    call protected_mode_enable
+
+    call disk_load
+
+    ;call protected_mode_enable
     ;call KERNEL_POINT
     jmp $
 
 [bits 32]
 protected_mode_enabled:
     mov ebx, PROTECTED_MODE_MESSAGE
-    call print32
+    call clear_screen86
+    call print86
     jmp $
 
 
@@ -28,10 +42,12 @@ protected_mode_enabled:
 %include "src/boot/print32.asm"
 %include "src/boot/protected_mode.asm"
 %include "src/boot/gdt.asm"
+%include "src/boot/kernel_loader.asm"
 
 BOOT_DRIVE db 0
-REAL_MODE_MESSAGE db "Started in real mode", 0
-TRY_PROTECTED_MODE_MESSAGE db "Try enable protected mode", 0
+counter_lines86 db 1
+end_of_text86 dq 0
+REAL_MODE_MESSAGE db "Started in real mode (Hard Disk 1)", 0
 PROTECTED_MODE_MESSAGE db "Protected mode started", 0
 times 510-($-$$) db 'k'
 dw 0xAA55
