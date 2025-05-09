@@ -32,25 +32,25 @@ print86:
         inc al
         mov [counter_lines86], al
         pop eax
-        mov edx, [VIDEO_MEMORY]
+        mov edx, VIDEO_MEMORY
         add edx, ecx
         inc ebx
         jmp .start
     .end:
-        sub edx, [VIDEO_MEMORY]
+        sub edx, VIDEO_MEMORY
         mov [end_of_text86], edx
         popa
         ret
 
-print_new_line86:
+print_new_line86: ; end_of_text = 160 * counter_lines++;
     pusha
-    mov edx, VIDEO_MEMORY
-    mov al, 0x0a
-    mov ah, DEFAULT_COLOR
-    mov [edx], ax
-    add edx, 2
-    mov al, 0x0d
-    mov [edx], ax
+    mov al, 160
+    mul byte[counter_lines86]
+    movzx ecx, ax
+    mov [end_of_text86], ecx
+    mov al, [counter_lines86]
+    inc al
+    mov [counter_lines86], al
     popa
     ret
 

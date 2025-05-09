@@ -17,12 +17,14 @@ start:
     mov ebx, TEST_MESSAGE
     call clear_screen86
     call print86
+    call print_new_line86
     call print86
     ;call kmain
     jmp $
     hlt		 	;halt the CPU
 
 %include "src/boot/print32.asm"
+;%include "src/boot/disk.asm"
 
 TEST_MESSAGE db "Test message", 10, 0
 
