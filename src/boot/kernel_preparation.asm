@@ -13,12 +13,20 @@ global start
 extern kmain        ;kmain is defined in the c file
 
 start:
-    mov esp, stack_space	;set stack pointer
-    mov ebx, TEST_MESSAGE
-    call clear_screen86
+    mov ebp, stack_space	;set stack pointer
+    mov esp, ebp ; not necessary
+    mov ebx, KERNEL_STARTED_MESSAGE
+    call print86
+
+    mov ebx, DISK_PARAMETER_MESSAGE
+    call print86
+
+    movzx ax, BYTE[VIDEO_MEMORY+480]
+    mov ebx, KERNEL_STARTED_MESSAGE
+    call hex_from_register16
     call print86
     call print_new_line86
-    call print86
+
     ;call kmain
     jmp $
     hlt		 	;halt the CPU
@@ -26,7 +34,8 @@ start:
 %include "src/boot/print32.asm"
 ;%include "src/boot/disk.asm"
 
-TEST_MESSAGE db "Test message", 10, 0
+KERNEL_STARTED_MESSAGE db "Kernel Started!", 10, 0
+DISK_PARAMETER_MESSAGE db "Disk parameter ", 0
 
 section .bss
 resb 8192		;8KB for stack

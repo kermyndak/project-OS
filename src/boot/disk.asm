@@ -1,4 +1,4 @@
-[bits 16]
+[bits 32]
 read_drive_parameters:
     pusha
     xor bx, bx
@@ -24,5 +24,6 @@ read_drive_parameters:
         popa
         ret
 
+BOOT_DRIVE db 0
 DISK_DRIVES_NUMBER_MESSAGE db "Number of hard disk drives: 0", 0
 ERROR_MESSAGE db "Error!", 0

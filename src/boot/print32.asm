@@ -72,5 +72,44 @@ clear_screen86:
     popa
     ret
 
-counter_lines86 db 1
-end_of_text86 dq 0
+hex_from_register16: ; parameters: ax - target register, bx - target buffer (Copied from print16.asm)
+    pusha
+    xor ah, ah
+    mov dl, 16
+    div dl
+    cmp al, 9
+    jg .add_character_al
+    jmp .add_digit_al
+
+    .add_character_al:
+        add al, 55
+        mov [ebx], al
+        cmp ah, 9
+        jg .add_character_ah
+        jmp .add_digit_ah
+
+    .add_digit_al:
+        add al, 48
+        mov [ebx], al
+        cmp ah, 9
+        jg .add_character_ah
+        jmp .add_digit_ah
+
+    .add_character_ah:
+        add ah, 55
+        mov [ebx+1], ah
+        jmp .final
+
+    .add_digit_ah:
+        add ah, 48
+        mov [ebx+1], ah
+        jmp .final
+
+    .final:
+        mov al, 0
+        mov [ebx+2], al
+        popa
+        ret
+
+counter_lines86 db 2
+end_of_text86 dq 160

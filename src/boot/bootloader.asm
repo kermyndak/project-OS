@@ -30,6 +30,8 @@ protected_mode_enabled:
     mov ebx, PROTECTED_MODE_MESSAGE
     call clear_screen86
     call print86
+    mov bx, [BOOT_DRIVE]
+    mov [VIDEO_MEMORY+480], bx
     jmp KERNEL_POINT
     jmp $
 
