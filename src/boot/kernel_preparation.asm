@@ -21,7 +21,7 @@ start:
     mov ebx, DISK_PARAMETER_MESSAGE
     call print86
 
-    movzx ax, BYTE[VIDEO_MEMORY+480]
+    movzx ax, BYTE[480]
     mov ebx, KERNEL_STARTED_MESSAGE
     call hex_from_register16
     call print86

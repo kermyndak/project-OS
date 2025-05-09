@@ -46,6 +46,7 @@ print_new_line16:
 
 hex_from_register16: ; parameters: ax - target register, bx - target buffer
     pusha
+    xor ah, ah
     mov dl, 16
     div dl
     cmp al, 9

@@ -31,7 +31,7 @@ protected_mode_enabled:
     call clear_screen86
     call print86
     mov bx, [BOOT_DRIVE]
-    mov [VIDEO_MEMORY+480], bx
+    mov [480], bx ; 480 - random number :)
     jmp KERNEL_POINT
     jmp $
 
