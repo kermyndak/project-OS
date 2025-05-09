@@ -7,10 +7,10 @@ before_load_kernel:
 	mov	bp, 0x9000
 	mov	sp, bp
     mov bx, REAL_MODE_MESSAGE
-    sub dl, 0x80
-    add [REAL_MODE_MESSAGE+25], dl ; Set disk number in message
-    call print16
-    call print_new_line16
+    ; sub dl, 0x80
+    ; add [REAL_MODE_MESSAGE+25], dl ; Set disk number in message
+    ; call print16
+    ; call print_new_line16
 
 load_kernel:
     ;movzx ax, [BOOT_DRIVE]
@@ -19,8 +19,14 @@ load_kernel:
     ;call print16
     ;call print_new_line16
 
-    mov dh, 20
+    mov dl, 20
     call disk_load
+    mov bx, KERNEL_POINT
+    call print16
+    mov bx, REAL_MODE_MESSAGE
+    ;call hex_from_register16
+    ;mov bx, PROTECTED_MODE_MESSAGE
+    call print16
 
     call protected_mode_enable
     jmp $
@@ -30,7 +36,7 @@ protected_mode_enabled:
     mov ebx, PROTECTED_MODE_MESSAGE
     call clear_screen86
     call print86
-    jmp KERNEL_POINT+1000
+    jmp KERNEL_POINT
     jmp $
 
 

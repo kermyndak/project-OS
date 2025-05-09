@@ -1,13 +1,16 @@
 [bits 32]
+%ifndef DEFAULT_COLOR
+%define DEFAULT_COLOR 0x02
+%endif
+
 VIDEO_MEMORY equ 0xb8000
-COLOR equ 0x0f
 
 print86:
     pusha
     mov edx, VIDEO_MEMORY
     .start:
     mov al, byte[ebx]
-    mov ah, COLOR
+    mov ah, DEFAULT_COLOR
     cmp al, 0
     je .end
 
@@ -23,7 +26,7 @@ print_new_line86:
     pusha
     mov edx, VIDEO_MEMORY
     mov al, 0x0a
-    mov ah, COLOR
+    mov ah, DEFAULT_COLOR
     mov [edx], ax
     add edx, 2
     mov al, 0x0d
@@ -37,7 +40,7 @@ clear_screen86:
     mov ecx, 4000
     mov edx, VIDEO_MEMORY
     mov al, 32
-    mov ah, COLOR
+    mov ah, DEFAULT_COLOR
     .loop:
         mov [edx], ax
         add edx, 2

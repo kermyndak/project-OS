@@ -11,7 +11,7 @@ disk_load: ; 'Read Sectors From Drive' function from BIOS int 13h
     mov dl, [BOOT_DRIVE]
     xor bx, bx
     mov es, bx
-    mov bx, KERNEL_POINT
+    mov bx, KERNEL_POINT ; address kernel
     int 0x13
 
     pop dx
@@ -28,7 +28,7 @@ disk_load: ; 'Read Sectors From Drive' function from BIOS int 13h
         mov bx, READ_DISK_ERROR_MESSAGE
         call print16
     .exit:
-        mov ah, 0
+        mov al, 0
         mov bx, RETURN_CODE+6
         call hex_from_register16
         mov bx, RETURN_CODE
