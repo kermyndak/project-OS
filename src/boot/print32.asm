@@ -7,18 +7,38 @@ VIDEO_MEMORY equ 0xb8000
 
 print86:
     pusha
+    mov ecx, [end_of_text86]
     mov edx, VIDEO_MEMORY
+    add edx, ecx
     .start:
-    mov al, byte[ebx]
-    mov ah, DEFAULT_COLOR
-    cmp al, 0
-    je .end
+        mov al, byte[ebx]
+        mov ah, DEFAULT_COLOR
+        cmp al, 0
+        je .end
 
-    mov [edx], ax
-    inc ebx
-    add edx, 2 
-    jmp .start
+        cmp al, 10
+        je .new_line
+
+        mov [edx], ax
+        inc ebx
+        add edx, 2
+        jmp .start
+    .new_line: ; ecx = 160 * counter_lines++ - 2
+        push eax
+        mov al, 160
+        mul byte[counter_lines86]
+        movzx ecx, ax
+        mov al, [counter_lines86]
+        inc al
+        mov [counter_lines86], al
+        pop eax
+        mov edx, [VIDEO_MEMORY]
+        add edx, ecx
+        inc ebx
+        jmp .start
     .end:
+        sub edx, [VIDEO_MEMORY]
+        mov [end_of_text86], edx
         popa
         ret
 
