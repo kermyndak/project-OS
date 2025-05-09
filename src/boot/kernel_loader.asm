@@ -3,7 +3,7 @@
 disk_load: ; 'Read Sectors From Drive' function from BIOS int 13h
     pusha
     push dx
-    mov ax, 0x02
+    mov ah, 0x02
     mov al, dl ; number of sectors will read
     mov ch, 0 ; cylinder number
     mov cl, 2 ; the sector number 2 - second sector (starts from 1, not 0)
@@ -11,6 +11,7 @@ disk_load: ; 'Read Sectors From Drive' function from BIOS int 13h
     mov dl, [BOOT_DRIVE]
     xor bx, bx
     mov es, bx
+    mov bx, KERNEL_POINT
     int 0x13
 
     pop dx

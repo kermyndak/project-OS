@@ -40,6 +40,7 @@ clear_screen86:
     mov ah, COLOR
     .loop:
         mov [edx], ax
+        add edx, 2
         dec ecx
         loop .loop
     mov [end_of_text86], bx
@@ -47,3 +48,6 @@ clear_screen86:
     mov [counter_lines86], bx
     popa
     ret
+
+counter_lines86 db 1
+end_of_text86 dq 0

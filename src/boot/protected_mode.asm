@@ -16,6 +16,6 @@ protected_mode_init:
     mov fs, ax
     mov gs, ax
 
-    mov ebp, 0x9000
+    mov ebp, 0x90000
     mov esp, ebp
     call protected_mode_enabled

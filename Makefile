@@ -68,7 +68,7 @@ test_mode:
 	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(BOOTOBJ)kasm.o $(KERNELOBJ)kc0-1.o
 
 disk_format:
-	$(ASMCC) $(ASMFLAGS) bin src/boot/entry_point.asm -o bootpart.bin
+	$(ASMCC) $(ASMFLAGS) bin src/boot/bootloader.asm -o bootpart.bin
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(TEMPFUNCTIONSSRC)temp.asm -o $(TEMPFUNCTIONSOBJ)temp.o
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(BOOTSRC)kernel_preparation.asm -o $(BOOTOBJ)kasm.o
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) src/cpu/interrupts.asm -o $(KERNELOBJ)interrupts.o
@@ -78,7 +78,7 @@ disk_format:
 	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(BOOTOBJ)kasm.o $(KERNELOBJ)kc0-1.o $(KERNELOBJ)interrupts.o $(KERNELOBJ)isr.o $(KERNELOBJ)irq.o
 	dd if=/dev/zero of=disk.img bs=1M count=10
 	dd if=bootpart.bin of=disk.img conv=notrunc
-	dd if=kernel of=disk.img conv=notrunc seek=2
+	dd if=kernel of=disk.img bs=512 conv=notrunc seek=1
 
 
 clean:
