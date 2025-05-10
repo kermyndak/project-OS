@@ -26,13 +26,14 @@ start:
     call hex_from_register16
     call print86
     call print_new_line86
+    ;mov [BOOT_DRIVE], al
 
+    ;call read_drive_parameters
     ;call kmain
     jmp $
     hlt		 	;halt the CPU
 
 %include "src/boot/print32.asm"
-;%include "src/boot/disk.asm"
 
 KERNEL_STARTED_MESSAGE db "Kernel Started!", 10, 0
 DISK_PARAMETER_MESSAGE db "Disk parameter ", 0

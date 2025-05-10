@@ -1,7 +1,9 @@
-[bits 32]
+; real mode
+[bits 16]
 read_drive_parameters:
     pusha
     xor bx, bx
+    xor eax, eax
     mov ah, 0x08
     mov dl, [BOOT_DRIVE]
     mov es, bx ; to work around some buggy BIOS
