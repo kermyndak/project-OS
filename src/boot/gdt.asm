@@ -26,5 +26,5 @@ gdt_descriptor:
     dw gdt_end - gdt_start - 1
     dd gdt_start
 
-CODE_SEG equ code_descriptor - gdt_start
-DATA_SEG equ data_descriptor - gdt_start
+CODE_SEG equ code_descriptor - gdt_start ; 0x08
+DATA_SEG equ data_descriptor - gdt_start ; 0x10

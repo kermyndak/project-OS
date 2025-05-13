@@ -1,3 +1,4 @@
+[bits 32]
 section .text
 
 ; define macro for ISR
@@ -73,6 +74,9 @@ global irq14
 global irq15
 global irq16
 
+extern c_isr_handler
+extern c_irq_handler
+
 ; define 32 ISR
 %assign i 0
 %rep 32
@@ -89,11 +93,39 @@ global irq16
 
 isr_handler:
     pusha
-    mov ax, 0x10
+    mov ax, ds
+    push eax
+    mov ax, 0x10 ; load data segment 
     mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    call c_isr_handler
+    pop eax
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    popa
+    sti
+    iret
 
 
 irq_handler:
     pusha
+    mov ax, ds
+    push eax
     mov ax, 0x10
     mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    call c_irq_handler
+    pop eax
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    popa
+    sti
+    iret

@@ -10,6 +10,7 @@ section .text
     dd - (0x1BADB002 + 0x00) ;checksum. m+f+c should be zero
 
 global start
+global load_gdt_asm
 extern kmain        ;kmain is defined in the c file
 
 start:
@@ -21,15 +22,14 @@ start:
     mov ebx, DISK_PARAMETER_MESSAGE
     call print86
 
-    movzx ax, BYTE[480]
-    mov ebx, KERNEL_STARTED_MESSAGE
-    call hex_from_register16
-    call print86
-    call print_new_line86
+    ;movzx ax, BYTE[480]
     ;mov [BOOT_DRIVE], al
+    ;mov ebx, KERNEL_STARTED_MESSAGE
+    ;call hex_from_register16
+    ;call print86
+    ;call print_new_line86
 
-    ;call read_drive_parameters
-    ;call kmain
+    call kmain
     jmp $
     hlt		 	;halt the CPU
 

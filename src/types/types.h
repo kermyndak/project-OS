@@ -17,6 +17,8 @@ void convert_array_extended_registers_to_string_about_proccessor(unsigned long *
 void hex_from_array_extended_registers_with_separator(unsigned long *reg_array, volatile unsigned char* buffer, unsigned char length, unsigned char separator);
 static inline void bits_from_byte_inline(unsigned char byte, volatile unsigned char* buffer);
 void bits_with_indexes_from_extended_register(unsigned long reg, volatile unsigned char* buffer, begin_format format);
+unsigned short get_low_address(unsigned long full_address);
+unsigned short get_high_address(unsigned long full_address);
 
 // realizations
 void strcpy(volatile unsigned char* dst, volatile unsigned const char* src){
@@ -175,6 +177,14 @@ void bits_with_indexes_from_extended_register(unsigned long reg, volatile unsign
 		strcpy(buffer, "Error, bad format...");
 	}
 	return;
+}
+
+unsigned short get_low_address(unsigned long full_address){
+	return full_address & 0xFFFF;
+}
+
+unsigned short get_high_address(unsigned long full_address){
+	return (full_address >> 16) & 0xFFFF;
 }
 
 #endif

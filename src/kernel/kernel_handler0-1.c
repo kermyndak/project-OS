@@ -32,10 +32,11 @@ void kmain(void){
 	}
 	return;
 #endif
-	cpuid(1, longs_buffer);
-	hex_from_array_extended_registers_with_separator(longs_buffer, main_buffer, 4, ':');
-	print_text_videomemory(main_buffer, true);
-	bits_with_indexes_from_extended_register(longs_buffer[0], main_buffer, ZERO_FORMAT);
-	print_text_videomemory(main_buffer, true);
+	//cpuid(1, longs_buffer);
+	//hex_from_array_extended_registers_with_separator(longs_buffer, main_buffer, 4, ':');
+	//print_text_videomemory(main_buffer, true);
+	//bits_with_indexes_from_extended_register(longs_buffer[0], main_buffer, ZERO_FORMAT);
+	//print_text_videomemory(main_buffer, true);
+	//load_idt();
 	return;
 }

@@ -1,6 +1,5 @@
 #ifndef CPU_H
 #define CPU_H
-#include "../kernel/headers/kernel_handler.h"
 
 // declarations
 static inline void cli();
