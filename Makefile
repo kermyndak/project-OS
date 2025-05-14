@@ -73,10 +73,12 @@ disk_format:
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(TEMPFUNCTIONSSRC)temp.asm -o $(TEMPFUNCTIONSOBJ)temp.o
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(BOOTSRC)kernel_preparation.asm -o $(BOOTOBJ)kasm.o
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) src/cpu/interrupts.asm -o $(KERNELOBJ)interrupts.o
+	$(CC) $(CFLAGS) -c src/drivers/screen.c -o $(KERNELOBJ)screen.o
+	$(CC) $(CFLAGS) -c src/types/types.c -o $(KERNELOBJ)types.o
+	$(CC) $(CFLAGS) -c src/cpu/isr.c -o $(KERNELOBJ)isr.o
+	$(CC) $(CFLAGS) -c src/cpu/idt.c -o $(KERNELOBJ)idt.o
 	$(CC) $(CFLAGS) -c $(KERNELSRC)kernel_handler0-1.c -o $(KERNELOBJ)kc0-1.o
-#$(CC) $(CFLAGS) -c src/cpu/isr.c -o $(KERNELOBJ)isr.o
-#$(CC) $(CFLAGS) -c src/cpu/idt.c -o $(KERNELOBJ)idt.o
-	$(LD) -m elf_i386 -T link.ld -o kernel $(BOOTOBJ)kasm.o $(TEMPFUNCTIONSOBJ)temp.o $(KERNELOBJ)kc0-1.o $(KERNELOBJ)interrupts.o --oformat binary
+	$(LD) -m elf_i386 -T link.ld -o kernel $(BOOTOBJ)kasm.o $(TEMPFUNCTIONSOBJ)temp.o $(KERNELOBJ)interrupts.o $(KERNELOBJ)idt.o $(KERNELOBJ)isr.o $(KERNELOBJ)types.o $(KERNELOBJ)screen.o $(KERNELOBJ)kc0-1.o --oformat binary
 	cat bootpart.bin kernel > disk.img
 # dd if=/dev/zero of=disk.img bs=1M count=10 2>/dev/null
 # dd if=bootpart.bin of=disk.img conv=notrunc 2>/dev/null

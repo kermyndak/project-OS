@@ -4,3 +4,5 @@ kernel
 output.json
 bootpart.bin
 disk.img
+
+obj/kernel/kc0-1.o
