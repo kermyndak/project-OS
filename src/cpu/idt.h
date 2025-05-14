@@ -10,19 +10,12 @@ struct InterruptDescriptor{
     unsigned char  zero;            // unused, set to 0
     unsigned char  type_attributes; // gate type, dpl, and p fields
     unsigned short high_offset;     // offset bits 16..31
-};
+} __attribute__((packed));
 
 struct InterruptDescriptorRegisterDescription{
     unsigned short limit;
     unsigned long base;
-} IDTR;
-
-struct IRQ_stack_values{ // And DS, for example see isr_handler in interrupts.asm
-    unsigned long DS;
-    unsigned long EDI, ESI, EBP, ESP, EBX, EDX, ECX, EAX; // from pusha
-    unsigned long IRQ_number, IRQ_error_code; // from irq or isr point
-    unsigned long EIP, CS, EFLAGS, useresp, SS; // from IRQ call
-};
+} __attribute__((packed)) IDTR;
 
 struct InterruptDescriptor IDT[IDT_LENGTH];
 

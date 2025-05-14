@@ -1,6 +1,14 @@
 #ifndef ISR_H
 #define ISR_H
 
+struct ISR_stack_values{ // And DS, for example see isr_handler in interrupts.asm
+    unsigned long DS;
+    unsigned long EDI, ESI, EBP, ESP, EBX, EDX, ECX, EAX; // from pusha
+    unsigned long IRQ_number, IRQ_error_code; // from irq or isr point
+    unsigned long EIP, CS, EFLAGS, useresp, SS; // from IRQ call
+};
+
+// Declarations extern functions
 extern void isr0();
 extern void isr1();
 extern void isr2();
@@ -34,7 +42,29 @@ extern void isr29();
 extern void isr30();
 extern void isr31();
 
+extern void irq0();
+extern void irq1();
+extern void irq2();
+extern void irq3();
+extern void irq4();
+extern void irq5();
+extern void irq6();
+extern void irq7();
+extern void irq8();
+extern void irq9();
+extern void irq10();
+extern void irq11();
+extern void irq12();
+extern void irq13();
+extern void irq14();
+extern void irq15();
+
+// Declarations global functions
+void c_isr_handler(struct ISR_stack_values stack_value);
+void c_irq_handler(struct ISR_stack_values stack_value);
+
 void isr_install(){
+    // set exceptions
     set_idt(0, (unsigned long)isr0);
     set_idt(1, (unsigned long)isr1);
     set_idt(2, (unsigned long)isr2);
@@ -67,6 +97,24 @@ void isr_install(){
     set_idt(29, (unsigned long)isr29);
     set_idt(30, (unsigned long)isr30);
     set_idt(31, (unsigned long)isr31);
+
+    // set IRQ's
+    set_idt(32, (unsigned long)irq0);
+    set_idt(33, (unsigned long)irq1);
+    set_idt(34, (unsigned long)irq2);
+    set_idt(35, (unsigned long)irq3);
+    set_idt(36, (unsigned long)irq4);
+    set_idt(37, (unsigned long)irq5);
+    set_idt(38, (unsigned long)irq6);
+    set_idt(39, (unsigned long)irq7);
+    set_idt(40, (unsigned long)irq8);
+    set_idt(41, (unsigned long)irq9);
+    set_idt(42, (unsigned long)irq10);
+    set_idt(43, (unsigned long)irq11);
+    set_idt(44, (unsigned long)irq12);
+    set_idt(45, (unsigned long)irq13);
+    set_idt(46, (unsigned long)irq14);
+    set_idt(47, (unsigned long)irq15);
 }
 
 #endif
