@@ -13,7 +13,7 @@ bool equal_unsigned_chars(volatile const unsigned char* first, volatile const un
 bool equal_unsigned_longs(volatile unsigned long* first, unsigned long* second, unsigned char length);
 bool equal_c_strings(volatile const unsigned char* first, const unsigned char* second);
 
-// realizations
+// implementations
 bool equal_unsigned_chars(volatile const unsigned char* first, volatile const unsigned char* second, unsigned char length){
     for (unsigned char i = 0; i < length; i++){
         if (first[i] != second[i]) return false;

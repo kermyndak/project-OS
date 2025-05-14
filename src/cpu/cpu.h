@@ -8,7 +8,7 @@ static inline void sli();
 void cpuid(unsigned long code, unsigned long* buffer);
 unsigned long read_cr0();
 
-// realizations
+// implementations
 static inline void cli(){
     asm("cli");
 }

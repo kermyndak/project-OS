@@ -42,6 +42,9 @@ $(error Bad tab size, only 2 or 4.)
 endif
 endif
 
+all:
+	-mkdir obj/boot obj/cpu obj/drivers obj/kernel obj/temp_functions obj/types
+
 build:
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(BOOTSRC)kernel_preparation.asm -o $(BOOTOBJ)kasm.o
 	$(CC) $(CFLAGS) -c $(KERNELSRC)kernel_handler.c -o $(KERNELOBJ)kc.o
@@ -84,7 +87,6 @@ disk_format:
 # dd if=bootpart.bin of=disk.img conv=notrunc 2>/dev/null
 # dd if=kernel of=disk.img bs=512 conv=notrunc seek=1 2>/dev/null
 	qemu-system-i386 -drive file=disk.img,format=raw
-
 
 clean:
 	rm -rf $(KERNELOBJ)*

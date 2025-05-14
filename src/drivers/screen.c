@@ -1,7 +1,7 @@
 #include "../types/types.h"
 #include "screen.h"
 
-//realizations 
+// implementations
 void print_text_videomemory(volatile const unsigned char * buffer, bool new_string){
 	for (int i = end_of_text, j = 0; buffer[j] != '\0'; j++, end_of_text = i += 2){
         if (buffer[j] == '\n'){

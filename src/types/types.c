@@ -1,6 +1,6 @@
 #include "types.h"
 
-// realizations
+// implementations
 void strcpy(volatile unsigned char* dst, volatile unsigned const char* src){
 	while (*dst++ = *src++);
 	return;
