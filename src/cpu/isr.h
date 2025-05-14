@@ -1,3 +1,5 @@
+#include "idt.h"
+
 #ifndef ISR_H
 #define ISR_H
 
@@ -115,6 +117,14 @@ void isr_install(){
     set_idt(45, (unsigned long)irq13);
     set_idt(46, (unsigned long)irq14);
     set_idt(47, (unsigned long)irq15);
+}
+
+void c_isr_handler(struct ISR_stack_values stack_value){
+    print_text_videomemory("isr called", false);
+}
+
+void c_irq_handler(struct ISR_stack_values stack_value){
+    print_text_videomemory("irq called", false);
 }
 
 #endif

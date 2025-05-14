@@ -2,6 +2,7 @@
 #include "../cpu/cpu.h"
 #include "../drivers/screen.h"
 #include "../types/types.h"
+#include "../cpu/isr.h"
 #ifdef TEST_MODE
 	#include "../test/test.h"
 #endif
