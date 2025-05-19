@@ -1,7 +1,5 @@
 #include "isr.h"
-#include "idt.h"
 #include "../types/types.h"
-#include "../drivers/screen.h"
 
 void isr_install(){
     // set exceptions
