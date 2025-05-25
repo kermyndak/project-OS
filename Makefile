@@ -68,8 +68,11 @@ debug_mode:
 test_mode:
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(TEMPFUNCTIONSSRC)temp.asm -o $(TEMPFUNCTIONSOBJ)temp.o
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(BOOTSRC)kernel_preparation.asm -o $(BOOTOBJ)kasm.o
+	$(CC) $(CFLAGS) -c src/drivers/screen.c -o $(KERNELOBJ)screen.o
+	$(CC) $(CFLAGS) -c src/types/types.c -o $(KERNELOBJ)types.o
 	$(CC) $(CFLAGS) $(TESTFLAG) -c $(KERNELSRC)kernel_handler0-1.c -o $(KERNELOBJ)kc0-1.o
-	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(BOOTOBJ)kasm.o $(KERNELOBJ)kc0-1.o
+	$(LD) -m elf_i386 -T link.ld -o kernel $(TEMPFUNCTIONSOBJ)temp.o $(BOOTOBJ)kasm.o $(KERNELOBJ)screen.o $(KERNELOBJ)types.o $(KERNELOBJ)kc0-1.o
+	qemu-system-i386 -kernel kernel
 
 disk_format:
 	$(ASMCC) $(ASMFLAGS) -f bin src/boot/bootloader.asm -o bootpart.bin

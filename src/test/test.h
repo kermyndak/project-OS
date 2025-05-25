@@ -38,7 +38,12 @@ bool equal_c_strings(volatile const unsigned char* first, const unsigned char* s
 bool test(){
     unsigned char counter = '1';
     bool flag = true;
-    unsigned long temp_long;
+    unsigned char temp_uchar;
+    char temp_char;
+    unsigned short temp_ushort;
+    short temp_short;
+    unsigned long temp_ulong;
+    long temp_long;
     // tests
     {
         strcpy(test_buffer, "some_text");
@@ -80,8 +85,8 @@ bool test(){
     }
 
     {
-        temp_long = 170;
-        hex_from_extended_register(temp_long, test_buffer);
+        temp_ulong = 170;
+        hex_from_extended_register(temp_ulong, test_buffer);
         if (equal_c_strings(test_buffer, "000000AA")){
             print_text_videomemory_with_color("hex_from_extended_register - ", false, 0x02);
             print_text_videomemory_with_color("OK", true, 0x02);
@@ -166,14 +171,86 @@ bool test(){
     }
 
     {
-        temp_long = 663;
-        bits_with_indexes_from_extended_register(663, test_buffer, ZERO_FORMAT);
+        temp_ulong = 663;
+        bits_with_indexes_from_extended_register(temp_ulong, test_buffer, ZERO_FORMAT);
         strcpy(test_buffer + 100, "00000000000000000000001010010111\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n76543210765432107654321076543210");
         if (equal_unsigned_chars(test_buffer, test_buffer + 100, 99)){
             print_text_videomemory_with_color("bits_with_indexes_from_extended_register - ", false, 0x02);
             print_text_videomemory_with_color("OK", true, 0x02);
         } else {
             print_text_videomemory_with_color("bits_with_indexes_from_extended_register - ", false, 0x04);
+            print_text_videomemory_with_color("FAIL", true, 0x04);
+            flag = false;
+        }
+    }
+    {
+        temp_uchar = 228;
+        uint_from_byte(temp_uchar, test_buffer);
+        if (equal_c_strings(test_buffer, "228")){
+            print_text_videomemory_with_color("uint_from_byte - ", false, 0x02);
+            print_text_videomemory_with_color("OK", true, 0x02);
+        } else {
+            print_text_videomemory_with_color("uint_from_byte - ", false, 0x04);
+            print_text_videomemory_with_color("FAIL", true, 0x04);
+            flag = false;
+        }
+    }
+    {
+        temp_char = -112;
+        int_from_byte(temp_char, test_buffer);
+        if (equal_c_strings(test_buffer, "-112")){
+            print_text_videomemory_with_color("int_from_byte - ", false, 0x02);
+            print_text_videomemory_with_color("OK", true, 0x02);
+        } else {
+            print_text_videomemory_with_color("int_from_byte - ", false, 0x04);
+            print_text_videomemory_with_color("FAIL", true, 0x04);
+            flag = false;
+        }
+    }
+    {
+        temp_ushort = 30227;
+        uint_from_word(temp_ushort, test_buffer);
+        if (equal_c_strings(test_buffer, "30227")){
+            print_text_videomemory_with_color("uint_from_word - ", false, 0x02);
+            print_text_videomemory_with_color("OK", true, 0x02);
+        } else {
+            print_text_videomemory_with_color("uint_from_word - ", false, 0x04);
+            print_text_videomemory_with_color("FAIL", true, 0x04);
+            flag = false;
+        }
+    }
+    {
+        temp_short = -12227;
+        int_from_word(temp_short, test_buffer);
+        if (equal_c_strings(test_buffer, "-12227")){
+            print_text_videomemory_with_color("int_from_word - ", false, 0x02);
+            print_text_videomemory_with_color("OK", true, 0x02);
+        } else {
+            print_text_videomemory_with_color("int_from_word - ", false, 0x04);
+            print_text_videomemory_with_color("FAIL", true, 0x04);
+            flag = false;
+        }
+    }
+    {
+        temp_ulong = 30939227;
+        uint_from_dword(temp_ulong, test_buffer);
+        if (equal_c_strings(test_buffer, "30939227")){
+            print_text_videomemory_with_color("uint_from_dword - ", false, 0x02);
+            print_text_videomemory_with_color("OK", true, 0x02);
+        } else {
+            print_text_videomemory_with_color("uint_from_dword - ", false, 0x04);
+            print_text_videomemory_with_color("FAIL", true, 0x04);
+            flag = false;
+        }
+    }
+    {
+        temp_long = -30939227;
+        int_from_dword(temp_long, test_buffer);
+        if (equal_c_strings(test_buffer, "-30939227")){
+            print_text_videomemory_with_color("int_from_dword - ", false, 0x02);
+            print_text_videomemory_with_color("OK", true, 0x02);
+        } else {
+            print_text_videomemory_with_color("int_from_dword - ", false, 0x04);
             print_text_videomemory_with_color("FAIL", true, 0x04);
             flag = false;
         }
