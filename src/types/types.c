@@ -166,3 +166,97 @@ unsigned short get_low_address(unsigned long full_address){
 unsigned short get_high_address(unsigned long full_address){
 	return (full_address >> 16) & 0xFFFF;
 }
+
+void uint_from_byte(unsigned char byte, volatile unsigned char* buffer){
+	if (byte / 100){
+		buffer[0] = '0' + byte / 100;
+		buffer[1] = '0' + (byte / 10) % 10;
+		buffer[2] = '0' + byte % 10;
+		buffer[3] = '\0';
+		return;
+	}
+	if (byte / 10){
+		buffer[0] = '0' + byte / 10;
+		buffer[1] = '0' + byte % 10;
+		buffer[2] = '\0';
+		return;
+	}
+	buffer[0] = '0' + byte % 10;
+	buffer[1] = '\0';
+	return;
+}
+
+void int_from_byte(char byte, volatile unsigned char* buffer){
+	if (byte < 0){
+		*buffer++ = '-';
+		byte *= -1;
+	}
+	if (byte / 100){
+		buffer[0] = '0' + byte / 100;
+		buffer[1] = '0' + (byte / 10) % 10;
+		buffer[2] = '0' + byte % 10;
+		buffer[3] = '\0';
+		return;
+	}
+	if (byte / 10){
+		buffer[0] = '0' + byte / 10;
+		buffer[1] = '0' + byte % 10;
+		buffer[2] = '\0';
+		return;
+	}
+	buffer[0] = '0' + byte % 10;
+	buffer[1] = '\0';
+	return;
+}
+
+void uint_from_word(unsigned short word, volatile unsigned char* buffer){
+	unsigned char j = 0;
+	for (unsigned short i = 10000; i >= 10; i/=10){
+		if (word / i == 0) continue;
+		buffer[j++] = '0' + (word / i) % 10;
+	}
+	buffer[j] = '0' + word % 10;
+	buffer[j + 1] = '\0';
+	return;
+}
+
+void int_from_word(short word, volatile unsigned char* buffer){
+	unsigned char j = 0;
+	if (word < 0){
+		*buffer++ = '-';
+		word *= -1;
+	}
+	for (short i = 10000; i >= 10; i/=10){
+		if (word / i == 0) continue;
+		buffer[j++] = '0' + (word / i) % 10;
+	}
+	buffer[j] = '0' + word % 10;
+	buffer[j + 1] = '\0';
+	return;
+}
+
+void uint_from_dword(unsigned long dword, volatile unsigned char* buffer){
+	unsigned char j = 0;
+	for (unsigned long i = 1000000000; i >= 10; i/=10){
+		if (dword / i == 0) continue;
+		buffer[j++] = '0' + (dword / i) % 10;
+	}
+	buffer[j] = '0' + dword % 10;
+	buffer[j + 1] = '\0';
+	return;
+}
+
+void int_from_dword(long dword, volatile unsigned char* buffer){
+	unsigned char j = 0;
+	if (dword < 0){
+		*buffer++ = '-';
+		dword *= -1;
+	}
+	for (long i = 1000000000; i >= 10; i/=10){
+		if (dword / i == 0) continue;
+		buffer[j++] = '0' + (dword / i) % 10;
+	}
+	buffer[j] = '0' + dword % 10;
+	buffer[j + 1] = '\0';
+	return;
+}
