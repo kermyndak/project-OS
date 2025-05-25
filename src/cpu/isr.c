@@ -56,7 +56,9 @@ void isr_install(){
 }
 
 void c_isr_handler(struct ISR_stack_values stack_value){
-    print_text_videomemory("isr called", false);
+    print_text_videomemory("isr called ", false);
+    print_char_videomemory(stack_value.IRQ_number);
+    print_new_line();
 }
 
 void c_irq_handler(struct ISR_stack_values stack_value){

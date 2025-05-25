@@ -31,11 +31,15 @@ void print_char_videomemory(unsigned char byte);
 void print_text_videomemory_with_color(volatile const unsigned char* buffer, bool new_string, colors color);
 void print_char_videomemory_with_color(unsigned char byte, colors color);
 void print_error_text_videomemory(volatile const unsigned char* buffer, bool new_string);
+void print_int_videomemory(const unsigned char value);
 void print_new_line();
 void clear_screen();
 
 // Video memory address
 volatile char* video_memory = (volatile char*)0xb8000;
+
+// Buffer for internal tasks
+unsigned char* video_memory_buffer[256];
 
 // For control video buffer
 static char counter_lines = 1;

@@ -13,6 +13,6 @@ void load_idt(){
     IDTR.limit = IDT_LENGTH * sizeof(struct InterruptDescriptor) - 1;
     asm volatile(
         "lidtl (%[IDT])\n\t"
-        "sti" : : [IDT] "r"(&IDT)
+        "sti" : : [IDT] "r"(&IDTR)
     );
 }

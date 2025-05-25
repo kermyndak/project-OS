@@ -153,6 +153,10 @@ void print_error_text_videomemory(volatile const unsigned char* buffer, bool new
 	return;
 }
 
+void print_int_videomemory(const unsigned char value){
+	//*video_memory_buffer;
+}
+
 void print_new_line(){
 	end_of_text = 160 * counter_lines++;
 	return;

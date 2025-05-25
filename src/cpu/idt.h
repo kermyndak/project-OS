@@ -15,9 +15,10 @@ struct InterruptDescriptor{
 struct InterruptDescriptorRegisterDescription{
     unsigned short limit;
     unsigned long base;
-} __attribute__((packed)) IDTR;
+} __attribute__((packed));
 
 struct InterruptDescriptor IDT[IDT_LENGTH];
+struct InterruptDescriptorRegisterDescription IDTR;
 
 void set_idt(unsigned char descriptor_index, unsigned long irq_handler);
 void load_idt();

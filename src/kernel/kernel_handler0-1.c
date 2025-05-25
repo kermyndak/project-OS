@@ -38,7 +38,7 @@ void kmain(void){
 	//print_text_videomemory(main_buffer, true);
 	//bits_with_indexes_from_extended_register(longs_buffer[0], main_buffer, ZERO_FORMAT);
 	//print_text_videomemory(main_buffer, true);
-	isr_install();
-	load_idt();
+	// isr_install();
+	// load_idt();
 	return;
 }
