@@ -7,6 +7,10 @@ static inline void sli();
 
 void cpuid(unsigned long code, unsigned long* buffer);
 unsigned long read_cr0();
+void port_byte_out(unsigned short port, unsigned char byte);
+unsigned char port_byte_get(unsigned short port);
+void port_word_out(unsigned short port, unsigned short word);
+unsigned short port_word_get(unsigned short port);
 
 // implementations
 static inline void cli(){
@@ -40,6 +44,26 @@ unsigned long read_cr0(){
     unsigned long value;
     asm volatile("mov %0, %%cr0" : "=r"(value));
     return value;
+}
+
+void port_byte_out(unsigned short port, unsigned char byte){
+    asm volatile("out %%al, %%dx" : : "a"(byte), "d"(port));
+}
+
+unsigned char port_byte_get(unsigned short port){
+    unsigned char result;
+    asm("in %%dx, %%al" : "=a"(result) : "d"(port));
+    return result;
+}
+
+void port_word_out(unsigned short port, unsigned short word){
+    asm volatile("out %%ax, %%dx" : : "a"(word), "d"(port));
+}
+
+unsigned short port_word_get(unsigned short port){
+    unsigned short result;
+    asm("in %%dx, %%ax" : "=a"(result) : "d"(port));
+    return result;
 }
 
 #endif

@@ -38,14 +38,8 @@ void kmain(void){
 	//print_text_videomemory(main_buffer, true);
 	//bits_with_indexes_from_extended_register(longs_buffer[0], main_buffer, ZERO_FORMAT);
 	//print_text_videomemory(main_buffer, true);
-	// isr_install();
-	// load_idt();
-	char temp_c = -100;
-	int_from_byte(temp_c, main_buffer);
-	print_text_videomemory(main_buffer, true);
-	long temp_s = -144038939;
-	int_from_dword(temp_s, main_buffer); 
-	print_text_videomemory(main_buffer, true);
-	print_int32_videomemory(-144038939);
+	isr_install();
+	load_idt();
+	//port_byte_out(0x20, 0x20);
 	return;
 }

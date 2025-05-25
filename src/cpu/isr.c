@@ -36,6 +36,18 @@ void isr_install(){
     set_idt(30, (unsigned long)isr30);
     set_idt(31, (unsigned long)isr31);
 
+    // Remap the PIC
+    port_byte_out(0x20, 0x11);
+	port_byte_out(0xA0, 0x11);
+	port_byte_out(0x21, 0x20);
+	port_byte_out(0xA1, 0x28);
+	port_byte_out(0x21, 0x04);
+	port_byte_out(0xA1, 0x02);
+	port_byte_out(0x21, 0x01);
+	port_byte_out(0xA1, 0x01);
+	port_byte_out(0x21, 0x0);
+	port_byte_out(0xA1, 0x0);
+
     // set IRQ's
     set_idt(32, (unsigned long)irq0);
     set_idt(33, (unsigned long)irq1);
@@ -56,11 +68,15 @@ void isr_install(){
 }
 
 void c_isr_handler(struct ISR_stack_values stack_value){
-    print_text_videomemory("isr called ", false);
-    print_char_videomemory(stack_value.IRQ_number);
+    print_text_videomemory("Exception called, number: ", false);
+    print_uint32_videomemory(stack_value.IRQ_number);
+    print_text_videomemory(" error code: ", false);
+    print_uint32_videomemory(stack_value.IRQ_error_code);
     print_new_line();
 }
 
 void c_irq_handler(struct ISR_stack_values stack_value){
-    print_text_videomemory("irq called", false);
+    print_text_videomemory("IRQ called, number: ", false);
+    print_uint8_videomemory(stack_value.IRQ_number);
+    print_new_line();
 }

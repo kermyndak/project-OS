@@ -107,6 +107,7 @@ isr_handler:
     mov fs, ax
     mov gs, ax
     popa
+    add esp, 8
     sti
     iret
 
@@ -127,5 +128,6 @@ irq_handler:
     mov fs, ax
     mov gs, ax
     popa
+    add esp, 8
     sti
     iret
