@@ -37,6 +37,12 @@ void print_uint16_videomemory(unsigned short value);
 void print_int16_videomemory(short value);
 void print_uint32_videomemory(unsigned long value);
 void print_int32_videomemory(long value);
+void print_uhex8_vidememory(unsigned char value);
+void print_hex8_videomemory(char value);
+void print_uhex16_videomemory(unsigned short value);
+void print_hex16_videomemory(short value);
+void print_uhex32_videomemory(unsigned long value);
+void print_hex32_videomemory(long value);
 void print_new_line();
 void clear_screen();
 

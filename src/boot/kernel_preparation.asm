@@ -1,7 +1,5 @@
 [bits 32]
 ; section .data
-; GDTbase EQU 00001000H
-; IDTbase EQU 00000400H
 section .text
     ; ;multiboot spec
     align 4

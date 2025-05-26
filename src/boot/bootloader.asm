@@ -19,7 +19,7 @@ load_kernel:
     ;call print16
     ;call print_new_line16
 
-    mov dl, 20
+    mov dl, 23 ; count of sectors
     call disk_load
 
     call protected_mode_enable

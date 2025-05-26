@@ -260,3 +260,60 @@ void int_from_dword(long dword, volatile unsigned char* buffer){
 	buffer[j + 1] = '\0';
 	return;
 }
+
+void shex_from_byte(char byte, volatile unsigned char* buffer){
+	if (byte < 0){
+		*buffer++ = '-';
+		byte *= -1;
+	}
+	unsigned char temp = byte / 16;
+	if (temp > 9) *buffer++ = temp + 55;
+	else *buffer++ = temp + 48;
+	temp = byte % 16;
+	if (temp > 9) *buffer++ = temp + 55;
+	else *buffer++ = temp + 48;
+	*buffer = '\0';
+	return;
+}
+
+void uhex_from_word(unsigned short word, volatile unsigned char* buffer){
+	unsigned char temp;
+	temp = (word / 256) % 256;
+	hex_from_byte_inline(temp, buffer);
+	temp = word % 256;
+	hex_from_byte_inline(temp, buffer + 2);
+	buffer[4] = '\0';
+	return;
+}
+
+void hex_from_word(short word, volatile unsigned char* buffer){
+	if (word < 0){
+		*buffer++ = '-';
+		word *= -1;
+	}
+	unsigned char temp;
+	temp = (word / 256) % 256;
+	hex_from_byte_inline(temp, buffer);
+	temp = word % 256;
+	hex_from_byte_inline(temp, buffer + 2);
+	buffer[4] = '\0';
+	return;
+}
+
+void hex_from_dword(long dword, volatile unsigned char* buffer){
+	if (dword < 0){
+		*buffer++ = '-';
+		dword *= -1;
+	}
+	unsigned char temp;
+	temp = dword / 16777216;
+	hex_from_byte_inline(temp, buffer);
+	temp = (dword / 65536) % 256;
+	hex_from_byte_inline(temp, buffer + 2);
+	temp = (dword / 256) % 256;
+	hex_from_byte_inline(temp, buffer + 4);
+	temp = dword % 256;
+	hex_from_byte_inline(temp, buffer + 6);
+	buffer[8] = '\0';
+	return;
+}

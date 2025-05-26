@@ -38,6 +38,9 @@ void kmain(void){
 	//print_text_videomemory(main_buffer, true);
 	//bits_with_indexes_from_extended_register(longs_buffer[0], main_buffer, ZERO_FORMAT);
 	//print_text_videomemory(main_buffer, true);
+	// unsigned long temp_l = 8674;
+	print_hex8_videomemory(23);
+	print_new_line();
 	isr_install();
 	load_idt();
 	//port_byte_out(0x20, 0x20);

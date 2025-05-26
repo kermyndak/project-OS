@@ -3,7 +3,7 @@
 
 // custom types
 typedef enum { false, true } bool;
-typedef enum { ZERO_FORMAT, ONE_FORMAT } begin_format;
+typedef enum { ZERO_FORMAT, ONE_FORMAT } begin_format; // for function 'bits_with_indexes_from_extended_register'
 
 // declarations
 void strcpy(volatile unsigned char* dst, volatile unsigned const char* src);
@@ -25,5 +25,9 @@ void uint_from_word(unsigned short word, volatile unsigned char* buffer); // wor
 void int_from_word(short word, volatile unsigned char* buffer);
 void uint_from_dword(unsigned long dword, volatile unsigned char* buffer); // dword - 4 bytes
 void int_from_dword(long dword, volatile unsigned char* buffer);
+void shex_from_byte(char byte, volatile unsigned char* buffer); // for unsigned used 'c_variant_hex_from_byte'
+void uhex_from_word(unsigned short word, volatile unsigned char* buffer);
+void hex_from_word(short word, volatile unsigned char* buffer);
+void hex_from_dword(long dword, volatile unsigned char* buffer); // for unsigned used 'hex_from_extended_register'
 
 #endif
