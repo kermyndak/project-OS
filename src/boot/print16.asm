@@ -24,25 +24,25 @@ print_new_line16:
     popa
     ret
 
-; print_with_new_line16: ; bx - address string
-;     pusha
-;     .start:
-;         mov al, [bx]
-;         cmp al, 0
-;         je .end
-;         mov ah, 0x0e
-;         int 0x10
+print_with_new_line16: ; bx - address string
+    pusha
+    .start:
+        mov al, [bx]
+        cmp al, 0
+        je .end
+        mov ah, 0x0e
+        int 0x10
 
-;         inc bx
-;         jmp .start
-;     .end:
-;         mov ah, 0x0e
-;         mov al, 0x0a
-;         int 0x10
-;         mov al, 0x0d
-;         int 0x10
-;         popa
-;         ret
+        inc bx
+        jmp .start
+    .end:
+        mov ah, 0x0e
+        mov al, 0x0a
+        int 0x10
+        mov al, 0x0d
+        int 0x10
+        popa
+        ret
 
 hex_from_register16: ; parameters: ax - target register, bx - target buffer
     pusha
@@ -82,3 +82,41 @@ hex_from_register16: ; parameters: ax - target register, bx - target buffer
         mov [bx + 2], al
         popa
         ret
+
+print_int_from_byte: ; ax - number
+    pusha
+    mov bx, 10000
+    .cycle:
+        cmp bx, 10
+        jl .last_symbol
+        push ax
+        xor dx, dx
+        mov cl, 48
+        div bx
+        cmp ax, 0
+        je .cycle_preparation
+        mov dl, 10
+        div dl
+        add cl, ah
+        .print_symbol:
+            mov al, cl
+            mov ah, 0x0e
+            int 0x10
+        .cycle_preparation:
+            mov ax, bx
+            xor dx, dx
+            mov bx, 10
+            div bx
+            mov bx, ax
+            pop ax
+            jmp .cycle
+    .last_symbol:
+        mov cl, '0'
+        mov dl, 10
+        div dl
+        add cl, ah
+        mov al, cl
+        mov ah, 0x0e
+        int 0x10
+    popa
+    ret

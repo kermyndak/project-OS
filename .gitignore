@@ -3,4 +3,5 @@ obj/*
 kernel
 output.json
 bootpart.bin
+boot2part.bin
 disk.img

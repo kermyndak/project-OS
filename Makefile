@@ -76,6 +76,7 @@ test_mode:
 
 disk_format:
 	$(ASMCC) $(ASMFLAGS) -f bin src/boot/bootloader.asm -o bootpart.bin
+	$(ASMCC) $(ASMFLAGS) -f bin src/boot/boot2part.asm -o boot2part.bin
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(TEMPFUNCTIONSSRC)temp.asm -o $(TEMPFUNCTIONSOBJ)temp.o
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) $(BOOTSRC)kernel_preparation.asm -o $(BOOTOBJ)kasm.o
 	$(ASMCC) $(ASMFLAGS) $(ASMFORMAT) src/cpu/interrupts.asm -o $(KERNELOBJ)interrupts.o
@@ -85,7 +86,7 @@ disk_format:
 	$(CC) $(CFLAGS) -c src/cpu/idt.c -o $(KERNELOBJ)idt.o
 	$(CC) $(CFLAGS) -c $(KERNELSRC)kernel_handler0-1.c -o $(KERNELOBJ)kc0-1.o
 	$(LD) -m elf_i386 -T link.ld -o kernel $(BOOTOBJ)kasm.o $(TEMPFUNCTIONSOBJ)temp.o $(KERNELOBJ)interrupts.o $(KERNELOBJ)idt.o $(KERNELOBJ)screen.o $(KERNELOBJ)isr.o $(KERNELOBJ)types.o $(KERNELOBJ)kc0-1.o --oformat binary
-	cat bootpart.bin kernel > disk.img
+	cat bootpart.bin boot2part.bin kernel > disk.img
 # dd if=/dev/zero of=disk.img bs=1M count=10 2>/dev/null
 # dd if=bootpart.bin of=disk.img conv=notrunc 2>/dev/null
 # dd if=kernel of=disk.img bs=512 conv=notrunc seek=1 2>/dev/null
