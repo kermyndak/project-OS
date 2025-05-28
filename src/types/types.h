@@ -19,15 +19,15 @@ static inline void bits_from_byte_inline(unsigned char byte, volatile unsigned c
 void bits_with_indexes_from_extended_register(unsigned long reg, volatile unsigned char* buffer, begin_format format);
 unsigned short get_low_address(unsigned long full_address);
 unsigned short get_high_address(unsigned long full_address);
-void uint_from_byte(unsigned char byte, volatile unsigned char* buffer);
-void int_from_byte(char byte, volatile unsigned char* buffer);
-void uint_from_word(unsigned short word, volatile unsigned char* buffer); // word - 2 bytes
-void int_from_word(short word, volatile unsigned char* buffer);
-void uint_from_dword(unsigned long dword, volatile unsigned char* buffer); // dword - 4 bytes
-void int_from_dword(long dword, volatile unsigned char* buffer);
-void shex_from_byte(char byte, volatile unsigned char* buffer); // for unsigned used 'c_variant_hex_from_byte'
-void uhex_from_word(unsigned short word, volatile unsigned char* buffer);
-void hex_from_word(short word, volatile unsigned char* buffer);
-void hex_from_dword(long dword, volatile unsigned char* buffer); // for unsigned used 'hex_from_extended_register'
+// void uint_from_byte(unsigned char byte, volatile unsigned char* buffer);
+// void int_from_byte(char byte, volatile unsigned char* buffer);
+// void uint_from_word(unsigned short word, volatile unsigned char* buffer); // word - 2 bytes
+// void int_from_word(short word, volatile unsigned char* buffer);
+// void uint_from_dword(unsigned long dword, volatile unsigned char* buffer); // dword - 4 bytes
+// void int_from_dword(long dword, volatile unsigned char* buffer);
+// void shex_from_byte(char byte, volatile unsigned char* buffer); // for unsigned used 'c_variant_hex_from_byte'
+// void uhex_from_word(unsigned short word, volatile unsigned char* buffer);
+// void hex_from_word(short word, volatile unsigned char* buffer);
+// void hex_from_dword(long dword, volatile unsigned char* buffer); // for unsigned used 'hex_from_extended_register'
 
 #endif

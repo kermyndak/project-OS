@@ -29,7 +29,7 @@ disk_load: ; 'Read Sectors From Drive' function from BIOS int 13h
         call print16
         jmp .return_code
     .return_code:
-        mov al, 0
+        mov al, ah
         mov bx, RETURN_CODE+6
         call hex_from_register16
         mov bx, RETURN_CODE

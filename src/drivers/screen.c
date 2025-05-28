@@ -153,65 +153,65 @@ void print_error_text_videomemory(volatile const unsigned char* buffer, bool new
 	return;
 }
 
-void print_uint8_videomemory(unsigned char value){
-	uint_from_byte(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_uint8_videomemory(unsigned char value){
+// 	uint_from_byte(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_int8_videomemory(char value){
-	int_from_byte(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_int8_videomemory(char value){
+// 	int_from_byte(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_uint16_videomemory(unsigned short value){
-	uint_from_word(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_uint16_videomemory(unsigned short value){
+// 	uint_from_word(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_int16_videomemory(short value){
-	int_from_word(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_int16_videomemory(short value){
+// 	int_from_word(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_uint32_videomemory(unsigned long value){
-	uint_from_dword(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_uint32_videomemory(unsigned long value){
+// 	uint_from_dword(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_int32_videomemory(long value){
-	int_from_dword(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_int32_videomemory(long value){
+// 	int_from_dword(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_uhex8_vidememory(unsigned char value){
-	c_variant_hex_from_byte(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_uhex8_vidememory(unsigned char value){
+// 	c_variant_hex_from_byte(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_hex8_videomemory(char value){
-	shex_from_byte(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_hex8_videomemory(char value){
+// 	shex_from_byte(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_uhex16_videomemory(unsigned short value){
-	uhex_from_word(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_uhex16_videomemory(unsigned short value){
+// 	uhex_from_word(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_hex16_videomemory(short value){
-	hex_from_word(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_hex16_videomemory(short value){
+// 	hex_from_word(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_uhex32_videomemory(unsigned long value){
-	hex_from_extended_register(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_uhex32_videomemory(unsigned long value){
+// 	hex_from_extended_register(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
-void print_hex32_videomemory(long value){
-	hex_from_dword(value, video_memory_buffer);
-	print_text_videomemory(video_memory_buffer, false);
-}
+// void print_hex32_videomemory(long value){
+// 	hex_from_dword(value, video_memory_buffer);
+// 	print_text_videomemory(video_memory_buffer, false);
+// }
 
 void print_new_line(){
 	end_of_text = 160 * counter_lines++;
