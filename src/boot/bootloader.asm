@@ -10,7 +10,6 @@ before_load:
     sub dl, 0x80
     add [REAL_MODE_MESSAGE+25], dl ; Set disk number in message
     call print_with_new_line16
-    call read_drive_parameters
 
 load_second_part_bootloader:
     ;mov es, 0
@@ -30,7 +29,6 @@ load_second_part_bootloader:
 
 %include "src/boot/print16.asm"
 %include "src/boot/disk_loader.asm"
-%include "src/boot/disk.asm"
 
 BOOT_DRIVE db 0
 REAL_MODE_MESSAGE db "Started in real mode (HD 1)", 0

@@ -9,6 +9,8 @@ init:
     mov cl, [480]
     mov [BOOT_DRIVE], cl
 
+    call read_drive_parameters
+
     %ifdef BOOT2PART_SIZE
         %define INITIAL_SECTOR_KERNEL BOOT2PART_SIZE+2
         mov cl, INITIAL_SECTOR_KERNEL
@@ -37,8 +39,9 @@ protected_mode_enabled:
 %include "src/boot/gdt.asm"
 %include "src/boot/print16.asm"
 %include "src/boot/disk_loader.asm"
+%include "src/boot/disk.asm"
 
 BOOT_DRIVE db 0
 BOOT2LOADER_HELLO_MESSAGE db "Second part of bootloader loaded", 0
 PROTECTED_MODE_MESSAGE db "Protected mode started", 0
-times 1024-($-$$) db 's'
+times 2048-($-$$) db 's'
