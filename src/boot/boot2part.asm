@@ -9,9 +9,18 @@ init:
     mov cl, [480]
     mov [BOOT_DRIVE], cl
 
-    mov cl, 4
-    mov bx, KERNEL_POINT
-    mov dl, 20 ; count of sectors
+    %ifdef BOOT2PART_SIZE
+        %define INITIAL_SECTOR_KERNEL BOOT2PART_SIZE+2
+        mov cl, INITIAL_SECTOR_KERNEL
+    %else
+        mov cl, 4
+    %endif
+    mov bx, KERNEL_POINT ; Kernel address
+    %ifdef KERNEL_SIZE
+        mov dl, KERNEL_SIZE ; count of sectors
+    %else 
+        mov dl, 5
+    %endif
     call disk_load
     call protected_mode_enable
     jmp $

@@ -69,14 +69,14 @@ void isr_install(){
 
 void c_isr_handler(struct ISR_stack_values stack_value){
     print_text_videomemory("Exception called, number: ", false);
-    // print_uint32_videomemory(stack_value.IRQ_number);
+    print_uint32_videomemory(stack_value.IRQ_number);
     print_text_videomemory(" error code: ", false);
-    // print_uint32_videomemory(stack_value.IRQ_error_code);
+    print_uint32_videomemory(stack_value.IRQ_error_code);
     print_new_line();
 }
 
 void c_irq_handler(struct ISR_stack_values stack_value){
     print_text_videomemory("IRQ called, number: ", false);
-    // print_uint8_videomemory(stack_value.IRQ_number);
+    print_uint8_videomemory(stack_value.IRQ_number);
     print_new_line();
 }

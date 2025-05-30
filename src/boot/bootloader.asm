@@ -16,7 +16,11 @@ load_second_part_bootloader:
     ;mov es, 0
     mov cl, 2
     mov bx, BOOT2LOADER
-    mov dl, 2 ; count of sectors
+    %ifdef BOOT2PART_SIZE
+        mov dl, BOOT2PART_SIZE ; count of sectors
+    %else
+        mov dl, 2
+    %endif
     call disk_load
     mov bx, [BOOT_DRIVE]
     mov [480], bx ; 480 - random number :)

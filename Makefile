@@ -3,7 +3,7 @@ ifeq ($(shell uname), Linux)
 CC=gcc
 LD=ld
 else
-ifeq ($(shell x86_64-elf-gcc --help 2>/dev/null| grep "Options:"),)
+ifeq ($(shell x86_64-elf-gcc --help 2>/dev/null | grep "Options:"),)
 $(error x86_64-elf-gcc not installed...)
 else
 CC=x86_64-elf-gcc
@@ -86,6 +86,9 @@ disk_format:
 	$(CC) $(CFLAGS) -c src/cpu/idt.c -o $(KERNELOBJ)idt.o
 	$(CC) $(CFLAGS) -c $(KERNELSRC)kernel_handler0-1.c -o $(KERNELOBJ)kc0-1.o
 	$(LD) -m elf_i386 -T link.ld -o kernel $(BOOTOBJ)kasm.o $(TEMPFUNCTIONSOBJ)temp.o $(KERNELOBJ)interrupts.o $(KERNELOBJ)idt.o $(KERNELOBJ)screen.o $(KERNELOBJ)isr.o $(KERNELOBJ)types.o $(KERNELOBJ)kc0-1.o --oformat binary
+	cat bootpart.bin boot2part.bin kernel > disk.img
+	$(ASMCC) $(ASMFLAGS) -f bin src/boot/bootloader.asm -o bootpart.bin -DBOOT2PART_SIZE=$(shell ./get_components_size.sh | grep Second | tr -s ' ' | cut -d ' ' -f 3)
+	$(ASMCC) $(ASMFLAGS) -f bin src/boot/boot2part.asm -o boot2part.bin -DKERNEL_SIZE=$(shell ./get_components_size.sh | grep Kernel | tr -s ' ' | cut -d ' ' -f 2) -DBOOT2PART_SIZE=$(shell ./get_components_size.sh | grep Second | tr -s ' ' | cut -d ' ' -f 3)
 	cat bootpart.bin boot2part.bin kernel > disk.img
 # dd if=/dev/zero of=disk.img bs=1M count=10 2>/dev/null
 # dd if=bootpart.bin of=disk.img conv=notrunc 2>/dev/null

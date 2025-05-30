@@ -26,7 +26,7 @@ start:
     ;call print86
     ;call print_new_line86
 
-    ;call kmain
+    call kmain
     jmp $
     hlt		 	;halt the CPU
 
