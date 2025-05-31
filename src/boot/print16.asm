@@ -85,6 +85,7 @@ hex_from_register16: ; parameters: ax - target register, bx - target buffer
 
 print_int_from_byte: ; ax - number
     pusha
+    and eax, 65535 ; for correct work
     mov bx, 10000
     .cycle:
         cmp bx, 10

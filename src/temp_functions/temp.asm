@@ -1,6 +1,7 @@
-bits 32
+[bits 32]
 section .text
 global _checkPCI
+global detect_memory
 extern print_text_videomemory
 
 _checkPCI:
@@ -18,8 +19,3 @@ _checkPCI:
     mov esp, ebp
     pop ebp
     ret
-
-section .bss
-    resb 150
-section .data
-    buffer_temp dd 65, 0, 0, 0, 0, 0, 0

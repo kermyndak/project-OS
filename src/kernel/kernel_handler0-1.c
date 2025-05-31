@@ -41,6 +41,7 @@ void kmain(void){
 	// unsigned long temp_l = 8674;
 	// print_hex32_videomemory(4934823);
 	print_new_line();
+	//detect_memory();
 	isr_install();
 	load_idt();
 	//port_byte_out(0x20, 0x20);
