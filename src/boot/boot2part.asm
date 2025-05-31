@@ -9,7 +9,9 @@ init:
     mov cl, [480]
     mov [BOOT_DRIVE], cl
 
-    call read_drive_parameters
+    call detect_low_memory ; detect memory volume in real mode
+
+    call read_drive_parameters ; get drive parameters
 
     %ifdef BOOT2PART_SIZE
         %define INITIAL_SECTOR_KERNEL BOOT2PART_SIZE+2
@@ -24,7 +26,7 @@ init:
         mov dl, 5
     %endif
     call disk_load
-    call protected_mode_enable
+    ;call protected_mode_enable
     jmp $
 
 [bits 32]
@@ -40,8 +42,9 @@ protected_mode_enabled:
 %include "src/boot/print16.asm"
 %include "src/boot/disk_loader.asm"
 %include "src/boot/disk.asm"
+%include "src/boot/ram_detect.asm"
 
 BOOT_DRIVE db 0
 BOOT2LOADER_HELLO_MESSAGE db "Second part of bootloader loaded", 0
 PROTECTED_MODE_MESSAGE db "Protected mode started", 0
-times 2048-($-$$) db 's'
+times 1536-($-$$) db 's'
