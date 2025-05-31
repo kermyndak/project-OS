@@ -52,6 +52,6 @@ protected_mode_enabled:
 
 section .text
 BOOT_DRIVE db 0
-BOOT2LOADER_HELLO_MESSAGE db "Second part of bootloader loaded", 0
+BOOT2LOADER_HELLO_MESSAGE db "Second part of bootloader started", 0
 PROTECTED_MODE_MESSAGE db "Protected mode started", 0
 times 2560-($-$$) db 's'

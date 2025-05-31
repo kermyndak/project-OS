@@ -94,7 +94,7 @@ disk_format:
 # dd if=bootpart.bin of=disk.img conv=notrunc 2>/dev/null
 # dd if=boot2part.bin of=disk.img bs=512 conv=notrunc seek=1
 # dd if=kernel of=disk.img bs=512 conv=notrunc seek=6
-	qemu-system-i386 -drive file=disk.img,format=raw -m 1M
+	qemu-system-i386 -drive file=disk.img,format=raw -m 4G
 
 clean:
 	rm -rf $(KERNELOBJ)*

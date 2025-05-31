@@ -228,10 +228,31 @@ print_full_size_memory:
     call print_int_from_byte
     mov bx, MB_MESSAGE
     call print_with_new_line16
+
+    mov bx, MAXIMUM_SIZE_AVAILABLE_MEMORY_MESSAGE
+    call print16
+    call print_int_from_byte
+    mov bx, MB_MESSAGE
+    call print_with_new_line16
     jmp .exit
     .print_gigabytes:
         mov ebx, 1024
         div ebx
+        call print_int_from_byte
+        mov bx, GB_MESSAGE
+        call print_with_new_line16
+        cmp eax, 4
+        jg .print_max_gbx86
+        mov bx, MAXIMUM_SIZE_AVAILABLE_MEMORY_MESSAGE
+        call print16
+        call print_int_from_byte
+        mov bx, GB_MESSAGE
+        call print_with_new_line16
+        jmp .exit
+    .print_max_gbx86:
+        mov bx, MAXIMUM_SIZE_AVAILABLE_MEMORY_MESSAGE
+        call print16
+        mov eax, 4
         call print_int_from_byte
         mov bx, GB_MESSAGE
         call print_with_new_line16
@@ -294,7 +315,7 @@ print_free_memory_size:
 
 
 DETECT_MEMORY_MESSAGE db "- - Detect memory - -", 0
-SUCCESS_DETECT_LOW_MEMORY_MESSAGE db "Detect memory volume (Real Mode): ", 0
+SUCCESS_DETECT_LOW_MEMORY_MESSAGE db "Detect memory volume (for Real Mode): ", 0
 KB_MESSAGE db "KB", 0
 MB_MESSAGE db "MB", 0
 GB_MESSAGE db "GB", 0
@@ -308,6 +329,7 @@ FREE_MEMORY_MESSAGE db "Free Memory (1)    ", 0
 RESERVED_MEMORY_MESSAGE db "Reserved Memory (2)", 0
 FULL_SIZE_MEMORY_MESSAGE db "Full size memory: ", 0
 FREE_MEMORY_SIZE_MESSAGE db "Free memory size: ", 0
+MAXIMUM_SIZE_AVAILABLE_MEMORY_MESSAGE db "Available memory: ", 0
 
 section .bss
 number_entries: resb 2
