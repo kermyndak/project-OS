@@ -232,15 +232,6 @@ print_full_size_memory:
     .print_gigabytes:
         mov ebx, 1024
         div ebx
-        cmp eax, 1024
-        jge .print_terabytes
-        call print_int_from_byte
-        mov bx, GB_MESSAGE
-        call print_with_new_line16
-        jmp .exit
-    .print_terabytes:
-        mov ebx, 1024
-        div ebx
         call print_int_from_byte
         mov bx, GB_MESSAGE
         call print_with_new_line16
@@ -273,6 +264,8 @@ print_free_memory_size:
     mov bx, FREE_MEMORY_SIZE_MESSAGE
     call print16
 
+    cmp eax, 1024
+    jl .print_kb
     xor edx, edx ; for correct divide
     mov ebx, 1024 ; get megabytes
     div ebx
@@ -288,6 +281,11 @@ print_free_memory_size:
         div ebx
         call print_int_from_byte
         mov bx, GB_MESSAGE
+        call print_with_new_line16
+        jmp .exit
+    .print_kb:
+        call print_int_from_byte
+        mov bx, KB_MESSAGE
         call print_with_new_line16
         jmp .exit
     .exit:

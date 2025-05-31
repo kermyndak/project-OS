@@ -16,6 +16,7 @@ init:
     call print_memory_map
     call print_full_size_memory
     call print_free_memory_size
+
     call read_drive_parameters ; get drive parameters
 
     %ifdef BOOT2PART_SIZE
@@ -31,7 +32,7 @@ init:
         mov dl, 5
     %endif
     call disk_load
-    call protected_mode_enable
+    ;call protected_mode_enable
     jmp $
 
 [bits 32]
