@@ -11,7 +11,7 @@ LD=x86_64-elf-ld
 endif
 endif
 ASMCC=nasm
-CFLAGS=-m32 -Werror -nostdlib -nostdinc -fno-builtin -fno-stack-protector -Wno-implicit-function-declaration
+CFLAGS=-m32 -Werror -nostdlib -nostdinc -fno-builtin -fno-stack-protector -Wno-implicit-function-declaration -std=c17
 DEBUGFLAGS=-g -DDEBUG_MODE
 TESTFLAG=-DTEST_MODE
 ASMFLAGS=

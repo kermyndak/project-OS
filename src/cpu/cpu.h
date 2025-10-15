@@ -14,11 +14,11 @@ unsigned short port_word_get(unsigned short port);
 
 // implementations
 static inline void cli(){
-    asm("cli");
+    __asm__("cli");
 }
 
 static inline void sli(){
-    asm("sti");
+    __asm__("sti");
 }
 
 // Example
@@ -33,7 +33,7 @@ static inline void sli(){
 //         : "ebx", "ecx", "edx"
 //     );
 void cpuid(unsigned long code, unsigned long* buffer){
-    asm volatile(
+    __asm__ volatile(
         "cpuid" 
         : "=a"(*buffer), "=b"(*(buffer+1)), "=d"(*(buffer+2)), "=c"(*(buffer + 3)) 
         : "a"(code)
@@ -42,27 +42,27 @@ void cpuid(unsigned long code, unsigned long* buffer){
 
 unsigned long read_cr0(){
     unsigned long value;
-    asm volatile("mov %0, %%cr0" : "=r"(value));
+    __asm__ volatile("mov %0, %%cr0" : "=r"(value));
     return value;
 }
 
 void port_byte_out(unsigned short port, unsigned char byte){
-    asm volatile("out %%al, %%dx" : : "a"(byte), "d"(port));
+    __asm__ volatile("out %%al, %%dx" : : "a"(byte), "d"(port));
 }
 
 unsigned char port_byte_get(unsigned short port){
     unsigned char result;
-    asm("in %%dx, %%al" : "=a"(result) : "d"(port));
+    __asm__("in %%dx, %%al" : "=a"(result) : "d"(port));
     return result;
 }
 
 void port_word_out(unsigned short port, unsigned short word){
-    asm volatile("out %%ax, %%dx" : : "a"(word), "d"(port));
+    __asm__ volatile("out %%ax, %%dx" : : "a"(word), "d"(port));
 }
 
 unsigned short port_word_get(unsigned short port){
     unsigned short result;
-    asm("in %%dx, %%ax" : "=a"(result) : "d"(port));
+    __asm__("in %%dx, %%ax" : "=a"(result) : "d"(port));
     return result;
 }
 

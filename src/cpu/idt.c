@@ -11,7 +11,7 @@ void set_idt(unsigned char descriptor_index, unsigned long irq_handler){
 void load_idt(){
     IDTR.base = (unsigned long)&IDT;
     IDTR.limit = IDT_LENGTH * sizeof(struct InterruptDescriptor) - 1;
-    asm volatile(
+    __asm__ volatile(
         "lidtl (%[IDT])\n\t"
         "sti" : : [IDT] "r"(&IDTR)
     );
