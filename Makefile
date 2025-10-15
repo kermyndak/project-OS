@@ -92,9 +92,9 @@ disk_format:
 	cat bootpart.bin boot2part.bin kernel > disk.img
 # dd if=/dev/zero of=disk.img bs=1M count=10 2>/dev/null
 # dd if=bootpart.bin of=disk.img conv=notrunc 2>/dev/null
-# dd if=boot2part.bin of=disk.img bs=512 conv=notrunc seek=1
-# dd if=kernel of=disk.img bs=512 conv=notrunc seek=6
-	qemu-system-i386 -drive file=disk.img,format=raw -m 4G
+# dd if=boot2part.bin of=disk.img bs=512 conv=notrunc seek=1 2>/dev/null
+# dd if=kernel of=disk.img bs=512 conv=notrunc seek=6 2>/dev/null
+	qemu-system-i386 -drive file=disk.img,format=raw -m 8G
 
 clean:
 	rm -rf $(KERNELOBJ)*

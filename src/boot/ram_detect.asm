@@ -229,7 +229,7 @@ print_full_size_memory:
     mov bx, MB_MESSAGE
     call print_with_new_line16
 
-    mov bx, MAXIMUM_SIZE_AVAILABLE_MEMORY_MESSAGE
+    mov bx, MAXIMUM_SIZE_AVAILABLE_MEMORY_MESSAGE ; Add information about available memory
     call print16
     call print_int_from_byte
     mov bx, MB_MESSAGE
@@ -241,7 +241,8 @@ print_full_size_memory:
         call print_int_from_byte
         mov bx, GB_MESSAGE
         call print_with_new_line16
-        cmp eax, 4
+
+        cmp eax, 4 ; Add information about available memory
         jg .print_max_gbx86
         mov bx, MAXIMUM_SIZE_AVAILABLE_MEMORY_MESSAGE
         call print16

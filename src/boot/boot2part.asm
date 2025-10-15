@@ -32,7 +32,7 @@ init:
         mov dl, 5
     %endif
     call disk_load
-    ;call protected_mode_enable
+    call protected_mode_enable
     jmp $
 
 [bits 32]
