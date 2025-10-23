@@ -141,7 +141,7 @@ static inline void bits_from_byte_inline(unsigned char byte, volatile unsigned c
 void bits_with_indexes_from_extended_register(unsigned long reg, volatile unsigned char* buffer, begin_format format){
 	unsigned char temp;
 	temp = reg / 16777216;
-	bits_from_byte_inline(temp, buffer);
+	bits_from_byte_inline(temp, buffer); // first byte
 	temp = (reg / 65536) % 256;
 	bits_from_byte_inline(temp, buffer + 8);
 	temp = (reg / 256) % 256;

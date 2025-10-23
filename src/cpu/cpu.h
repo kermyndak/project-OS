@@ -1,6 +1,8 @@
 #ifndef CPU_H
 #define CPU_H
 
+#define APIC_CPUID_BIT 0x200
+
 // declarations
 static inline void cli();
 static inline void sli();
@@ -64,6 +66,16 @@ unsigned short port_word_get(unsigned short port){
     unsigned short result;
     __asm__("in %%dx, %%ax" : "=a"(result) : "d"(port));
     return result;
+}
+
+unsigned char check_APIC(){
+    unsigned long edx;
+    __asm__ volatile(
+        "cpuid"
+        : "=d"(edx)
+        : "a"(1)
+    );
+    return (unsigned char)(edx & APIC_CPUID_BIT);
 }
 
 #endif

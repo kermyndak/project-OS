@@ -1,6 +1,12 @@
 #include "isr.h"
 #include "../types/types.h"
 
+#define PIC1_COMMAND 0x20
+#define PIC1_DATA 0x21
+#define PIC2_COMMAND 0xA0
+#define PIC2_DATA 0xA1
+#define PIC_EOI_CODE 0x20
+
 void isr_install(){
     // set exceptions
     set_idt(0, (unsigned long)isr0);
@@ -37,16 +43,16 @@ void isr_install(){
     set_idt(31, (unsigned long)isr31);
 
     // Remap the PIC
-    port_byte_out(0x20, 0x11);
-	port_byte_out(0xA0, 0x11);
-	port_byte_out(0x21, 0x20);
-	port_byte_out(0xA1, 0x28);
-	port_byte_out(0x21, 0x04);
-	port_byte_out(0xA1, 0x02);
-	port_byte_out(0x21, 0x01);
-	port_byte_out(0xA1, 0x01);
-	port_byte_out(0x21, 0x0);
-	port_byte_out(0xA1, 0x0);
+    port_byte_out(PIC1_COMMAND, 0x11);
+	port_byte_out(PIC2_COMMAND, 0x11);
+	port_byte_out(PIC1_DATA, 0x20);
+	port_byte_out(PIC2_DATA, 0x28);
+	port_byte_out(PIC1_DATA, 0x04);
+	port_byte_out(PIC2_DATA, 0x02);
+	port_byte_out(PIC1_DATA, 0x01);
+	port_byte_out(PIC2_DATA, 0x01);
+	port_byte_out(PIC1_DATA, 0x0);
+	port_byte_out(PIC2_DATA, 0x0);
 
     // set IRQ's
     set_idt(32, (unsigned long)irq0);
@@ -73,10 +79,14 @@ void c_isr_handler(struct ISR_stack_values stack_value){
     print_text_videomemory(" error code: ", false);
     print_uint32_videomemory(stack_value.IRQ_error_code);
     print_new_line();
+    print_text_videomemory("\tMessage: ", false);
+    print_text_videomemory(exception_messages[stack_value.IRQ_number], true);
+    port_byte_out(0x20, 0x20);
 }
 
 void c_irq_handler(struct ISR_stack_values stack_value){
     print_text_videomemory("IRQ called, number: ", false);
     print_uint8_videomemory(stack_value.IRQ_number);
     print_new_line();
+    port_byte_out(0x20, 0x20);
 }

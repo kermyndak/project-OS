@@ -3,6 +3,7 @@
 #include "../types/types.h"
 // #include "../drivers/screen.h"
 //#include "../cpu/isr.h"
+#include "../drivers/keyboard.h"
 #ifdef TEST_MODE
 	#include "../test/test.h"
 #endif
@@ -36,14 +37,23 @@ void kmain(void){
 	//cpuid(1, longs_buffer);
 	//hex_from_array_extended_registers_with_separator(longs_buffer, main_buffer, 4, ':');
 	//print_text_videomemory(main_buffer, true);
-	//bits_with_indexes_from_extended_register(longs_buffer[0], main_buffer, ZERO_FORMAT);
+	//bits_with_indexes_from_extended_register(longs_buffer[2], main_buffer, ZERO_FORMAT);
 	//print_text_videomemory(main_buffer, true);
 	// unsigned long temp_l = 8674;
 	// print_hex32_videomemory(4934823);
+	if (check_APIC()){
+		strcpy(main_buffer, "APIC is enabled");
+		print_text_videomemory(main_buffer, true);
+	}
+	else{
+		strcpy(main_buffer, "APIC is disabled");
+		print_text_videomemory(main_buffer, true);
+	}
 	print_new_line();
-	//detect_memory();
 	isr_install();
 	load_idt();
-	//port_byte_out(0x20, 0x20);
+	keyboard_init();
+	port_byte_out(0x20, 0x20);
+	__asm__ volatile("int $1");
 	return;
 }
