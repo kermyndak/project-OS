@@ -15,15 +15,30 @@ void kmain(void){
 	// Identification proccessor
 	print_text_videomemory("Identification proccessor...", true);
 	cpuid(0, longs_buffer);
-#ifdef DEBUG_MODE
-	print_text_videomemory("EAX, EBX, EDX, ECX registers,\nwhere CPUID with code = 0: ", false);
-	hex_from_array_extended_registers_with_separator(longs_buffer, main_buffer, 4, ':');
-	print_text_videomemory(main_buffer, true);
-	print_new_line();
-#endif
 	print_text_videomemory("\tProccessor: ", false);
 	convert_array_extended_registers_to_string_about_proccessor(longs_buffer, main_buffer);
 	print_text_videomemory(main_buffer, true);
+#ifdef DEBUG_MODE
+	cpuid(0, longs_buffer);
+	print_text_videomemory("EAX, EBX, EDX, ECX registers,\nwhere CPUID with code = 0: ", false);
+	hex_from_array_extended_registers_with_separator(longs_buffer, main_buffer, 4, ':');
+	print_text_videomemory(main_buffer, true);
+
+	cpuid(1, longs_buffer);
+	print_text_videomemory("EAX, EBX, EDX, ECX registers,\nwhere CPUID with code = 1: ", false);
+	hex_from_array_extended_registers_with_separator(longs_buffer, main_buffer, 4, ':');
+	print_text_videomemory(main_buffer, true);
+
+	if (check_APIC()){
+		strcpy(main_buffer, "APIC is enabled");
+		print_text_videomemory(main_buffer, true);
+	}
+	else{
+		strcpy(main_buffer, "APIC is disabled");
+		print_text_videomemory(main_buffer, true);
+	}
+	print_new_line();
+#endif
 
 #ifdef TEST_MODE
 	print_new_line();
@@ -34,26 +49,20 @@ void kmain(void){
 	}
 	return;
 #endif
-	//cpuid(1, longs_buffer);
-	//hex_from_array_extended_registers_with_separator(longs_buffer, main_buffer, 4, ':');
-	//print_text_videomemory(main_buffer, true);
-	//bits_with_indexes_from_extended_register(longs_buffer[2], main_buffer, ZERO_FORMAT);
-	//print_text_videomemory(main_buffer, true);
+	// cpuid(1, longs_buffer);
+	// hex_from_extended_register(*(longs_buffer+2), main_buffer);
+	// print_text_videomemory(main_buffer, true);
+	// bits_with_indexes_from_extended_register(longs_buffer[2], main_buffer, ZERO_FORMAT);
+	// print_text_videomemory(main_buffer, true);
 	// unsigned long temp_l = 8674;
 	// print_hex32_videomemory(4934823);
-	if (check_APIC()){
-		strcpy(main_buffer, "APIC is enabled");
-		print_text_videomemory(main_buffer, true);
-	}
-	else{
-		strcpy(main_buffer, "APIC is disabled");
-		print_text_videomemory(main_buffer, true);
-	}
 	print_new_line();
 	isr_install();
-	load_idt();
-	keyboard_init();
-	port_byte_out(0x20, 0x20);
-	__asm__ volatile("int $1");
+	// check_APIC();
+	// load_idt();
+	// keyboard_init();
+	// port_byte_out(0x20, 0x20);
+	// __asm__ volatile("int $1");
+	hlt();
 	return;
 }

@@ -1,7 +1,7 @@
 #ifndef CPU_H
 #define CPU_H
 
-#define APIC_CPUID_BIT 0x200
+#define CPUID_APIC_BIT 1 << 9
 
 // declarations
 static inline void cli();
@@ -13,6 +13,7 @@ void port_byte_out(unsigned short port, unsigned char byte);
 unsigned char port_byte_get(unsigned short port);
 void port_word_out(unsigned short port, unsigned short word);
 unsigned short port_word_get(unsigned short port);
+unsigned char check_APIC();
 
 // implementations
 static inline void cli(){
@@ -21,6 +22,10 @@ static inline void cli(){
 
 static inline void sli(){
     __asm__("sti");
+}
+
+static inline void hlt(){
+    __asm__("hlt");
 }
 
 // Example
@@ -36,7 +41,7 @@ static inline void sli(){
 //     );
 void cpuid(unsigned long code, unsigned long* buffer){
     __asm__ volatile(
-        "cpuid" 
+        "cpuid"
         : "=a"(*buffer), "=b"(*(buffer+1)), "=d"(*(buffer+2)), "=c"(*(buffer + 3)) 
         : "a"(code)
     );
@@ -75,7 +80,10 @@ unsigned char check_APIC(){
         : "=d"(edx)
         : "a"(1)
     );
-    return (unsigned char)(edx & APIC_CPUID_BIT);
+    if (edx & CPUID_APIC_BIT){
+        return 1;
+    }
+    return 0;
 }
 
 #endif

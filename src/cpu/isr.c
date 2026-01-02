@@ -47,12 +47,19 @@ void isr_install(){
 	port_byte_out(PIC2_COMMAND, 0x11);
 	port_byte_out(PIC1_DATA, 0x20);
 	port_byte_out(PIC2_DATA, 0x28);
-	port_byte_out(PIC1_DATA, 0x04);
-	port_byte_out(PIC2_DATA, 0x02);
-	port_byte_out(PIC1_DATA, 0x01);
-	port_byte_out(PIC2_DATA, 0x01);
-	port_byte_out(PIC1_DATA, 0x0);
+	// port_byte_out(PIC1_DATA, 0x04);
+	// port_byte_out(PIC2_DATA, 0x02);
+	// port_byte_out(PIC1_DATA, 0x01);
+	// port_byte_out(PIC2_DATA, 0x01);
+	// port_byte_out(PIC1_DATA, 0x0);
+	// port_byte_out(PIC2_DATA, 0x0);
+    port_byte_out(PIC1_DATA, 0x0);
 	port_byte_out(PIC2_DATA, 0x0);
+    port_byte_out(PIC1_DATA, 0x01);
+	port_byte_out(PIC2_DATA, 0x01);
+    port_byte_out(PIC1_DATA, 0xff);
+	port_byte_out(PIC2_DATA, 0xff);
+    port_byte_out(PIC1_DATA, 0xFD);
 
     // set IRQ's
     set_idt(32, (unsigned long)irq0);
